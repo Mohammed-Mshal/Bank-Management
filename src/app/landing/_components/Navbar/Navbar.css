@@ -1,0 +1,160 @@
+nav {
+    color: #fff;
+    padding-block: 20px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: .5s all ease;
+    -webkit-transition: .5s all ease;
+    -moz-transition: .5s all ease;
+    -ms-transition: .5s all ease;
+    -o-transition: .5s all ease;
+
+    &.scrolling {
+        background: #000000af;
+
+    }
+
+    .links {
+        a {
+            padding-block: 10px;
+            position: relative;
+        }
+
+        a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            background-color: var(--normal-violet);
+            width: 0px;
+            height: 2px;
+            transition: .5s all ease;
+            -webkit-transition: .5s all ease;
+            -moz-transition: .5s all ease;
+            -ms-transition: .5s all ease;
+            -o-transition: .5s all ease;
+        }
+
+        a:hover::before {
+            width: 100%;
+        }
+    }
+
+    @media (max-width:768px) {
+        .containerLinks {
+            position: fixed;
+            top: 0;
+            right: -200px;
+            height: 100vh;
+            width: 200px;
+            background-color: #000;
+            transition: .5s all ease;
+            -webkit-transition: .5s all ease;
+            -moz-transition: .5s all ease;
+            -ms-transition: .5s all ease;
+            -o-transition: .5s all ease;
+
+            .links {
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+        }
+
+        .containerLinks.show {
+            right: 0;
+        }
+    }
+
+    .containerButtons {
+        display: flex;
+        gap: 10px;
+
+        a {
+            width: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-block: 4px;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            -ms-border-radius: 6px;
+            -o-border-radius: 6px;
+            transition: .5s all ease;
+            -webkit-transition: .5s all ease;
+            -moz-transition: .5s all ease;
+            -ms-transition: .5s all ease;
+            -o-transition: .5s all ease;
+        }
+
+        @media (max-width:558px) {
+            a {
+                width: 80px;
+                font-size: 15px;
+            }
+        }
+
+        .login {
+            border: 1px solid #7456ec6a;
+
+            &:hover {
+                background-color: var(--light-violet);
+                box-shadow: 0 0 10px 0 var(--light-violet);
+
+            }
+        }
+
+        .signup {
+            background: linear-gradient(to right, var(--normal-violet), var(--light-violet)) no-repeat;
+
+
+            &:hover {
+                box-shadow: -2px 0 10px 0 var(--normal-violet), 2px 0 10px 0 var(--light-violet);
+            }
+        }
+    }
+}
+
+.logo {
+    font-size: clamp(18px, 2.4vw, 36px);
+    transition: .5s all ease;
+    -webkit-transition: .5s all ease;
+    -moz-transition: .5s all ease;
+    -ms-transition: .5s all ease;
+    -o-transition: .5s all ease;
+    background: linear-gradient(to right, var(--normal-violet), var(--light-violet)) no-repeat;
+    background-clip: text;
+    background-size: 300px;
+    background-position: center center;
+    color: #fff;
+    animation: 5s animateColorText infinite ease-in-out alternate;
+    -webkit-animation: 5s animateColorText infinite ease-in-out alternate;
+
+    &:hover {
+        color: transparent;
+    }
+}
+
+@media (max-width:778px) {
+    html:has(.containerLinks.show){
+        overflow: hidden;
+    }
+}
+@keyframes animateColorText {
+
+    100%,
+    0% {
+        background-position: 100% 0;
+    }
+
+    50% {
+        background-position: 0px 0;
+    }
+}

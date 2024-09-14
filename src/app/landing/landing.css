@@ -1,0 +1,10 @@
+:root {
+    --dark-violet: #060026;
+    --normal-violet: #7456EC;
+    --light-violet: #D45BAF;
+    --hard-light-violet: #FAEEFC;
+}
+html,
+body{
+    overflow-x: hidden;
+}

@@ -1,0 +1,151 @@
+.banner {
+    background-color: var(--dark-violet);
+    color: #FFF;
+
+    .banner_presentation {
+        max-width: 500px;
+
+        @media (max-width:1024px) {
+                max-width: 100%;
+        }
+        .titleBanner {
+            font-size: clamp(42px, 10.4vw, 92px);
+            line-height: clamp(52px,16.4vw,82px);
+            font-weight: bold;
+
+            span {
+                color: transparent;
+                background: linear-gradient(to right, var(--normal-violet), var(--light-violet)) no-repeat center;
+                background-size: 500px;
+                background-position: 0px;
+                background-clip: text;
+                overflow: hidden;
+                animation: 5s animateColorTextBanner infinite ease-in-out alternate;
+                -webkit-animation: 3s animateColorTextBanner infinite ease-in-out alternate;
+                filter: drop-shadow(0 0 6px var(--normal-violet));
+                -webkit-filter: drop-shadow(0 0 6px var(--normal-violet));
+            }
+        }
+    }
+
+    .bannerImage {
+        position: relative;
+        z-index: 1;
+
+        .backgroundCircle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+
+            .boxShadow {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                box-shadow: inset 0 0 8px 14px #7456EC2f;
+
+                &.small {
+                    height: 400px;
+                    width: 400px;
+                }
+
+                &.medium {
+                    height: 500px;
+                    width: 500px;
+                }
+
+                &.large {
+                    height: 600px;
+                    width: 600px;
+                }
+
+                &.white {
+                    box-shadow: inset 0 0 8px 14px #ffffff1f;
+                    animation: 6s animationShadow infinite forwards;
+                    -webkit-animation: 6s animationShadow infinite forwards;
+                }
+
+
+            }
+        }
+
+        .containerImage {
+            position: relative;
+
+            .bagMoney {
+                position: absolute;
+                top: 80px;
+                right: 40px;
+                rotate: -30deg;
+                animation: animateIconImagePopup 2s infinite ease-in-out alternate;
+                -webkit-animation: animateIconImagePopup 2s infinite ease-in-out alternate;
+            }
+
+            .money {
+                position: absolute;
+                top: 120px;
+                left: 40px;
+                rotate: 30deg;
+                animation: animateIconImagePopup 2s infinite 1s ease-in-out alternate;
+                -webkit-animation: animateIconImagePopup 2s infinite 1s ease-in-out alternate;
+}
+        }
+    }
+}
+
+@keyframes animationShadow {
+    0% {
+        height: 0px;
+        width: 0px;
+        opacity: 1;
+    }
+
+    100% {
+        height: 600px;
+        width: 600px;
+        opacity: 0;
+    }
+}
+
+@keyframes animateColorTextBanner {
+
+    100%,
+    0% {
+        background-position: 100% 0;
+    }
+
+    50% {
+        background-position: 0% 0;
+    }
+}
+
+@keyframes animateIconImagePopup {
+    0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.2;
+    }
+
+    100% {
+        scale: .9;
+    }
+}
