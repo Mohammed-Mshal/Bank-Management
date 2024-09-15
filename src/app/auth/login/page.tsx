@@ -1,4 +1,4 @@
-import ButtonLogin from "@/app/_components/buttonLogin";
+import ButtonLogin from "@/app/_components/ButtonLogin";
 import Link from "next/link";
 import React from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
