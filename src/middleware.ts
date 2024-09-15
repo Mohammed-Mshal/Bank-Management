@@ -8,9 +8,10 @@ export default withAuth(async function middleware(request: NextRequest) {
     const isAuth = await getToken({ req: request }) //check if is Auth
     const protectedRoutes = ['/profile'] //Array of all protected route
     const isAuthRoute = pathname.startsWith('/auth') //auth route
-    const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route)) // check if use go to protected route
+    const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route)) || pathname === '/'// check if use go to protected route
+
     if (!isAuth && isProtectedRoute) {
-        return NextResponse.redirect(new URL('/auth/signin', request.url))
+        return NextResponse.redirect(new URL('/landing', request.url))
     }
     if (isAuthRoute && isAuth) {
         return NextResponse.redirect(new URL('/', request.url))
@@ -28,8 +29,7 @@ export default withAuth(async function middleware(request: NextRequest) {
 // Array of routes that middleware will work on it
 export const config = {
     matcher: [
-        '/auth/:path*',
-        '/profile'
+        '/:path*'
     ]
 }
 

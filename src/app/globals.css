@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --main-black: #0C0C0C;
+    --normal-black: #191919;
+    --light-violet: #A263F3;
+    --dark-violet: #1F1B25;
+}
