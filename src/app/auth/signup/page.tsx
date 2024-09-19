@@ -1,12 +1,9 @@
-import ButtonLogin from "@/app/_components/ButtonLogin";
-import LoginForm from "@/app/_components/LoginForm";
+import SignupForm from "@/app/_components/SignupForm";
 import { getSession } from "@/app/lib/getSession";
-import { loginEnum } from "@/enums/loginEnums";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BsGithub, BsGoogle } from "react-icons/bs";
 
-export default async function LoginPage() {
+export default async function SignupPage() {
   const session = await getSession();
   if (session?.user) {
     redirect("/");
@@ -20,26 +17,13 @@ export default async function LoginPage() {
           <h2 className="lg:text-4xl md:text-3xl text-2xl mb-2">Golden Bank</h2>
           <p className="md:text-lg text-base">Login To Your Account</p>
         </div>
-        <LoginForm />
+        <SignupForm />
         <p className="text-gray-400 text-sm text-center">
           Haven&apos;t Account?{"  "}
-          <Link href={"/auth/signup"} className="text-white">
-            Sing Up
+          <Link href={"/auth/login"} className="text-white">
+            Login
           </Link>
         </p>
-        <p className="text-center my-4 relative text-white before:absolute before:w-full before:h-px before:-z-10 z-0  before:bg-white before:left-0 before:top-1/2 before:-translate-y-1/2 ">
-          <span className="bg-[var(--normal-black)] px-4">OR</span>
-        </p>
-        <div className="flex flex-col gap-4">
-          <ButtonLogin
-            logoButton={<BsGoogle />}
-            signinWith={loginEnum.google}
-          />
-          <ButtonLogin
-            logoButton={<BsGithub />}
-            signinWith={loginEnum.github}
-          />
-        </div>
       </div>
     </div>
   );
