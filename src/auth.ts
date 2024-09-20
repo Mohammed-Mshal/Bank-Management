@@ -1,9 +1,13 @@
-import NextAuth, { CredentialsSignin } from "next-auth";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import NextAuth, { CredentialsSignin, User } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialProvider from 'next-auth/providers/credentials'
-import { connectDB } from "./app/lib/db";
-import UserModel from "./app/model/userModel";
 import { compare } from "bcryptjs";
+import { PrismaClient, User as userModel } from "@prisma/client";
+import { JWT } from "next-auth/jwt";
+import { AdapterUser } from "next-auth/adapters";
+const prisma = new PrismaClient()
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     GoogleProvider({
@@ -21,19 +25,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const email = credentials.email as string | undefined
         const password = credentials.password as string | undefined
         if (!email || !password) {
-          throw new CredentialsSignin('Please Provide Email And Password')
+          throw new CredentialsSignin('Please Fill all Field')
         }
-        await connectDB()
-        const isExistingUser = await UserModel.findOne({ email })
+        await prisma.$connect()
+        const isExistingUser = await prisma.user.findUnique({
+          where: { email }
+        })
         if (!isExistingUser) {
-          throw new Error('Email Is Not Exist')
+          throw new Error('Email Is not Exist')
         }
         const isValidPassword = await compare(password, isExistingUser.password)
         if (!isValidPassword) {
-          throw new Error("Password Is Not Valid")
+          throw new Error('Password Is Not Valid')
         }
         const userData = {
-          id: isExistingUser._id,
+          id: isExistingUser.id,
           firstName: isExistingUser.firstName,
           lastName: isExistingUser.lastName,
           email: isExistingUser.email,
@@ -49,40 +55,60 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     newUser: '/auth/signup',
   },
   callbacks: ({
-    async session({ session, token }) {
+    async jwt({ token, user }: { token: JWT, user: userModel | User | AdapterUser }) {
+      if (user) {
+        const myUser: userModel = user as userModel
+        token.role = myUser.role
+      }
+      return token
+    },
+    async session({ session, token }: {
+      session: any
+      token: any
+    }) {
       if (token?.sub && token?.role) {
         session.user.id = token.sub
         session.user.role = token.role
       }
       return session
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role
-      }
-      return token
-    },
     signIn: async ({ user, account }) => {
       if (account?.provider === 'google') {
         try {
           const { name, email, image, id } = user
-          await connectDB()
-          const isExistingUser = await UserModel.findOne({ email })
-          if (!isExistingUser) {
-            await UserModel.create({
-              firstName: name,
-              lastName: name,
-              email,
-              image,
-              authProviderId: id
+          if (email) {
+            await prisma.$connect()
+            const isExistingUser = await prisma.user.findUnique({
+              where: { email }
             })
-            return true
+            if (!isExistingUser) {
+              await prisma.user.create({
+                data: {
+                  firstName: name!,
+                  lastName: '',
+                  password: '',
+                  email,
+                  image: image!,
+                  authProviderId: id!
+                }
+              })
+              await prisma.$disconnect()
+
+              return true
+            }
+            else {
+              return true
+            }
           }
           else {
-            return true
-          }
+            console.log('lllll');
+            
+            throw new Error('Some Data Is Missing')
 
+          }
         } catch (error) {
+          console.log(error);
+
           throw new Error('Error While Creating User')
         }
       }

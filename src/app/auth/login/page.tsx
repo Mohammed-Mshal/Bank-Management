@@ -1,5 +1,5 @@
 import ButtonLogin from "@/app/_components/ButtonLogin";
-import LoginForm from "@/app/_components/LoginForm";
+import FormLogin from "@/app/_components/FormLogin";
 import { getSession } from "@/app/lib/getSession";
 import { loginEnum } from "@/enums/loginEnums";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export default async function LoginPage() {
           <h2 className="lg:text-4xl md:text-3xl text-2xl mb-2">Golden Bank</h2>
           <p className="md:text-lg text-base">Login To Your Account</p>
         </div>
-        <LoginForm />
+        <FormLogin />
         <p className="text-gray-400 text-sm text-center">
           Haven&apos;t Account?{"  "}
           <Link href={"/auth/signup"} className="text-white">

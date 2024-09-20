@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
-
-import { connectDB } from "@/app/lib/db"
-import UserModel from "@/app/model/userModel"
+import { PrismaClient } from '@prisma/client'
 import { signIn } from "@/auth"
 import { compare, hash } from "bcryptjs"
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
+const prisma = new PrismaClient()
 
-export async function register(prevState: { message: string }, formData: FormData) {
+export async function register(prevState: any, formData: FormData) {
     try {
         const firstName: string = <string>formData.get('firstName')
         const lastName: string = <string>formData.get('lastName')
@@ -14,38 +14,53 @@ export async function register(prevState: { message: string }, formData: FormDat
         const password: string = <string>formData.get('password')
         if (!firstName || !lastName || !email || !password) {
             return {
-                message: 'Please Fill All Field',
+                message: 'Please Fill All Fields',
             }
         }
-        await connectDB()
-        const isExistingUser = await UserModel.findOne({ email })
+        await prisma.$connect()
+        const isExistingUser = await prisma.user.findUnique({
+            where: { email }
+        })
         if (isExistingUser) {
+            console.log('Email Is Already Exist');
             return {
                 message: 'Email Is Already Exist',
             }
         }
         const hashingPassword = await hash(password, 12)
-
-        await UserModel.create({ firstName, lastName, email, password: hashingPassword })
-
-        redirect('/auth/login')
+        await prisma.user.create({
+            data: {
+                firstName,
+                lastName,
+                email,
+                password: hashingPassword,
+                image: '',
+                authProviderId: ''
+            }
+        })
+        await prisma.$disconnect()
     } catch (error) {
+        await prisma.$disconnect()
         return {
             message: 'Error While Creating Account',
         }
     }
+    redirect('/auth/login')
 }
-export async function login(prevState: { message: string }, formData: FormData) {
+export async function login(prevState: any, formData: FormData) {
+
     try {
         const email: string = <string>formData.get('email')
         const password: string = <string>formData.get('password')
         if (!email || !password) {
             return {
-                message: 'Please Fill All Field',
+                message: 'Please Fill All Fields',
             }
         }
-        await connectDB()
-        const isExistingUser = await UserModel.findOne({ email })
+        await prisma.$connect()
+        const isExistingUser = await prisma.user.findUnique({
+            where: { email }
+        })
         if (!isExistingUser) {
             return {
                 message: 'Email Is Not Exist',

@@ -1,4 +1,4 @@
-import SignupForm from "@/app/_components/SignupForm";
+import FormSignup from "@/app/_components/FormSignup";
 import { getSession } from "@/app/lib/getSession";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -17,7 +17,7 @@ export default async function SignupPage() {
           <h2 className="lg:text-4xl md:text-3xl text-2xl mb-2">Golden Bank</h2>
           <p className="md:text-lg text-base">Login To Your Account</p>
         </div>
-        <SignupForm />
+        <FormSignup />
         <p className="text-gray-400 text-sm text-center">
           Haven&apos;t Account?{"  "}
           <Link href={"/auth/login"} className="text-white">
