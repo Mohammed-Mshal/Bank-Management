@@ -3,10 +3,9 @@
 import { PrismaClient } from '@prisma/client'
 import { signIn } from "@/auth"
 import { compare, hash } from "bcryptjs"
-import { redirect } from 'next/navigation'
 const prisma = new PrismaClient()
 
-export async function register(prevState: any, formData: FormData) {
+export async function register(formData: FormData) {
     try {
         const firstName: string = <string>formData.get('firstName')
         const lastName: string = <string>formData.get('lastName')
@@ -22,7 +21,6 @@ export async function register(prevState: any, formData: FormData) {
             where: { email }
         })
         if (isExistingUser) {
-            console.log('Email Is Already Exist');
             return {
                 message: 'Email Is Already Exist',
             }
@@ -45,9 +43,8 @@ export async function register(prevState: any, formData: FormData) {
             message: 'Error While Creating Account',
         }
     }
-    redirect('/auth/login')
 }
-export async function login(prevState: any, formData: FormData) {
+export async function login(formData: FormData) {
 
     try {
         const email: string = <string>formData.get('email')
@@ -82,5 +79,4 @@ export async function login(prevState: any, formData: FormData) {
             message: <string>error
         }
     }
-    redirect('/')
 }

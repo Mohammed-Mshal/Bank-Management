@@ -1,7 +1,6 @@
 import { auth } from "@/auth"
-import { cache } from "react";
 
-export const getSession = cache(async () => {
+export async function getSession() {
     try {
         const session = auth()
         return session
@@ -9,4 +8,4 @@ export const getSession = cache(async () => {
         console.log(error);
 
     }
-})
+}

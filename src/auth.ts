@@ -101,14 +101,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           }
           else {
-            console.log('lllll');
             
             throw new Error('Some Data Is Missing')
 
           }
         } catch (error) {
-          console.log(error);
-
           throw new Error('Error While Creating User')
         }
       }
