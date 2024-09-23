@@ -15,14 +15,6 @@ export async function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
         }
     }
-    if (currentPath.startsWith(authRoutes)) {
-        const cookie = cookies().get('session')?.value
-        const session = await decrypt(cookie)
-        
-        if (session?.userId) {
-            return NextResponse.redirect(new URL('/', request.nextUrl))
-        }
-    }
     return NextResponse.next()
 }
 
