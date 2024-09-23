@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
+import { createSession } from '@/app/libs/session'
 import { PrismaClient } from '@prisma/client'
-import { signIn } from "@/auth"
 import { compare, hash } from "bcryptjs"
+import { redirect } from 'next/navigation'
 const prisma = new PrismaClient()
 
-export async function register(formData: FormData) {
+export async function register(state, formData: FormData) {
     try {
         const firstName: string = <string>formData.get('firstName')
         const lastName: string = <string>formData.get('lastName')
@@ -13,7 +14,7 @@ export async function register(formData: FormData) {
         const password: string = <string>formData.get('password')
         if (!firstName || !lastName || !email || !password) {
             return {
-                message: 'Please Fill All Fields',
+                errors: 'Please Fill All Fields',
             }
         }
         await prisma.$connect()
@@ -22,36 +23,37 @@ export async function register(formData: FormData) {
         })
         if (isExistingUser) {
             return {
-                message: 'Email Is Already Exist',
+                errors: 'Email Is Already Exist',
             }
         }
         const hashingPassword = await hash(password, 12)
-        await prisma.user.create({
+        const userCreated = await prisma.user.create({
             data: {
                 firstName,
                 lastName,
                 email,
                 password: hashingPassword,
                 image: '',
-                authProviderId: ''
             }
         })
+        await createSession(userCreated.id, userCreated.role)
         await prisma.$disconnect()
     } catch (error) {
         await prisma.$disconnect()
         return {
-            message: 'Error While Creating Account',
+            errors: 'Error While Creating Account',
         }
     }
+    redirect('/')
 }
-export async function login(formData: FormData) {
+export async function login(state, formData: FormData) {
 
     try {
         const email: string = <string>formData.get('email')
         const password: string = <string>formData.get('password')
         if (!email || !password) {
             return {
-                message: 'Please Fill All Fields',
+                errors: 'Please Fill All Fields',
             }
         }
         await prisma.$connect()
@@ -60,23 +62,23 @@ export async function login(formData: FormData) {
         })
         if (!isExistingUser) {
             return {
-                message: 'Email Is Not Exist',
+                errors: 'Email Is Not Exist',
             }
         }
         const isValidPassword = await compare(password, isExistingUser.password)
         if (!isValidPassword) {
             return {
-                message: 'Password Is Not Valid'
+                errors: 'Password Is Not Valid'
             }
         }
-        await signIn('credentials', {
-            email,
-            password,
-            redirect: false,
-        })
+        await prisma.$disconnect()
+        await createSession(isExistingUser.id, isExistingUser.role)
     } catch (error) {
+        console.log(error);
+        
         return {
-            message: <string>error
+            errors: <string>error
         }
     }
+    redirect('/')
 }
