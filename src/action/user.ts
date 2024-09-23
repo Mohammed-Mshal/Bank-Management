@@ -44,7 +44,7 @@ export async function register(state, formData: FormData) {
         }
     }
     await prisma.$disconnect()
-    redirect('/')
+    redirect('/dashboard')
 }
 export async function login(state, formData: FormData) {
 
@@ -82,5 +82,5 @@ export async function login(state, formData: FormData) {
         }
     }
     await prisma.$disconnect()
-    redirect('/')
+    redirect('/dashboard')
 }
