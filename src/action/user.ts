@@ -61,7 +61,7 @@ export async function login(state, formData: FormData) {
             where: { email }
         })
         console.log(isExistingUser);
-        
+
         if (!isExistingUser) {
             return {
                 errors: 'Email Is Not Exist',
@@ -76,7 +76,7 @@ export async function login(state, formData: FormData) {
         await createSession(isExistingUser.id, isExistingUser.role)
     } catch (error) {
         console.log(error);
-        
+
         return {
             errors: <string>error
         }
