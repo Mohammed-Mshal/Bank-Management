@@ -8,6 +8,7 @@ const prisma = new PrismaClient()
 
 export async function register(state, formData: FormData) {
     try {
+        await prisma.$connect()
         const firstName: string = <string>formData.get('firstName')
         const lastName: string = <string>formData.get('lastName')
         const email: string = <string>formData.get('email')
@@ -17,7 +18,6 @@ export async function register(state, formData: FormData) {
                 errors: 'Please Fill All Fields',
             }
         }
-        await prisma.$connect()
         const isExistingUser = await prisma.user.findUnique({
             where: { email }
         })
@@ -37,18 +37,19 @@ export async function register(state, formData: FormData) {
             }
         })
         await createSession(userCreated.id, userCreated.role)
-        await prisma.$disconnect()
     } catch (error) {
         await prisma.$disconnect()
         return {
             errors: 'Error While Creating Account',
         }
     }
+    await prisma.$disconnect()
     redirect('/')
 }
 export async function login(state, formData: FormData) {
 
     try {
+        await prisma.$connect()
         const email: string = <string>formData.get('email')
         const password: string = <string>formData.get('password')
         if (!email || !password) {
@@ -56,10 +57,11 @@ export async function login(state, formData: FormData) {
                 errors: 'Please Fill All Fields',
             }
         }
-        await prisma.$connect()
         const isExistingUser = await prisma.user.findUnique({
             where: { email }
         })
+        console.log(isExistingUser);
+        
         if (!isExistingUser) {
             return {
                 errors: 'Email Is Not Exist',
@@ -71,7 +73,6 @@ export async function login(state, formData: FormData) {
                 errors: 'Password Is Not Valid'
             }
         }
-        await prisma.$disconnect()
         await createSession(isExistingUser.id, isExistingUser.role)
     } catch (error) {
         console.log(error);
@@ -80,5 +81,6 @@ export async function login(state, formData: FormData) {
             errors: <string>error
         }
     }
+    await prisma.$disconnect()
     redirect('/')
 }
