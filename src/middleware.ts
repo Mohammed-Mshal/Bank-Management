@@ -6,6 +6,8 @@ export async function middleware(request: NextRequest) {
     const protectedRoute = ['/']
     const currentPath = request.nextUrl.pathname
     const isProtectedRoute = protectedRoute.includes(currentPath)    
+    console.log(currentPath);
+    
     if (isProtectedRoute && !currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
