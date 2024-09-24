@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     const protectedRoute = ['/dashboard']
     const currentPath = request.nextUrl.pathname
     const isProtectedRoute = protectedRoute.includes(currentPath)
-    if (isProtectedRoute && !currentPath.startsWith(authRoutes)) {
+    if (isProtectedRoute) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
         if (!session) {
@@ -46,6 +46,5 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         '/',
-        '/:path*'
     ],
 }
