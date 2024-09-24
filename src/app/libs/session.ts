@@ -46,7 +46,7 @@ export async function updateCookies(request: NextRequest) {
         name: 'session',
         value: await encrypt(parsed),
         httpOnly: true,
-        expires: parsed.expires as Date
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
     })
     return res
 }
