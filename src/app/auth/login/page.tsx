@@ -4,7 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 export default async function LoginPage() {
   const session = await verifySession();
-  if (session?.userId) {
+  if (session) {
     redirect("/dashboard");
   }
   return (

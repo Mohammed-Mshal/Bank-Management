@@ -28,6 +28,8 @@ export async function createSession(userId, role) {
     const session = await encrypt({ userId, role, expires })
     cookies().set('session', session, { httpOnly: true, expires, sameSite: 'lax', path: '/' })
 }
+
+
 export async function verifySession() {
     const userCookie = cookies().get('session')?.value;
     if (userCookie) {
@@ -36,6 +38,7 @@ export async function verifySession() {
     }
     return null
 }
+
 export async function updateCookies(request: NextRequest) {
     const session = request.cookies.get('session')?.value
     if (!session) return;
