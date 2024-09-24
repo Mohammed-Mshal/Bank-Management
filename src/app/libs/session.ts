@@ -1,21 +1,12 @@
 import 'server-only'
-import { jwtVerify, SignJWT } from "jose";
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { JWTPayload, jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextRequest, NextResponse } from 'next/server';
 const key = new TextEncoder().encode(process.env.SECRET)
-const cookie = {
-    name: 'session',
-    options: {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        path: '/'
-    },
-    duration: 24 * 60 * 60 * 1000
-}
+
 export async function encrypt(payload) {
-    return new SignJWT(payload)
+    return await new SignJWT(payload)
         .setProtectedHeader({
             alg: 'HS256'
         })
@@ -33,21 +24,33 @@ export async function decrypt(session) {
 
 }
 export async function createSession(userId, role) {
-    const expires = new Date(Date.now() + cookie.duration)
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
     const session = await encrypt({ userId, role, expires })
-    const sessionCookie = { ...cookie.options, expires } as Partial<ResponseCookie>
-    cookies().set(cookie.name, session, sessionCookie)
-
+    cookies().set('session', session, { httpOnly: true, expires, sameSite: 'lax', path: '/' })
 }
 export async function verifySession() {
-    const userCookie = cookies().get(cookie.name)?.value;
-    const session = await decrypt(userCookie)
-    if (!session?.userId) {
-        redirect('/auth/login')
+    const userCookie = cookies().get('session')?.value;
+    if (userCookie) {
+        const session = await decrypt(userCookie)
+        return session
     }
-    return { userId: session.userId, role: session.role }
+    return null
+}
+export async function updateCookies(request: NextRequest) {
+    const session = request.cookies.get('session')?.value
+    if (!session) return;
+    const parsed = await decrypt(session) as JWTPayload
+    parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+    const res = NextResponse.next()
+    res.cookies.set({
+        name: 'session',
+        value: await encrypt(parsed),
+        httpOnly: true,
+        expires: parsed.expires as Date
+    })
+    return res
 }
 export async function deleteSession() {
-    cookies().delete(cookie.name)
+    cookies().delete('session')
     redirect('/auth/login')
 }
