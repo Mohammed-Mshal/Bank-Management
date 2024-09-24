@@ -6,36 +6,24 @@ export async function middleware(request: NextRequest) {
     const protectedRoute = ['/dashboard']
     const currentPath = request.nextUrl.pathname
     const isProtectedRoute = protectedRoute.includes(currentPath)
-    if (isProtectedRoute) {
+    if (isProtectedRoute && !currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        if (!session) {
+        if (!session?.userId) {
             return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
-        }
-        else {
-            return NextResponse.next()
-
         }
     }
     if (currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        console.log(cookie,'++++++',session,'++++++',currentPath);
-        
-        if (session) {
+        if (session?.userId) {
             return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-        }
-        else {
-            return NextResponse.next()
-
         }
     }
     if (currentPath === '/') {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        console.log(cookie,'++++++',session,'++++++',currentPath);
-
-        if (session) {
+        if (session?.userId) {
             return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
         }
         else {
@@ -50,5 +38,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         '/',
+        '/:path*'
     ],
 }
