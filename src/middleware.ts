@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     if (isProtectedRoute && !currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        if (!session?.userId) {
+        if (!session) {
             return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
         }
         else {
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
     if (currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        if (session?.userId) {
+        if (session) {
             return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
         }
         else {
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
     if (currentPath === '/') {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
-        if (session?.userId) {
+        if (session) {
             return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
         }
         else {
