@@ -1,4 +1,4 @@
-import FormLogin from "@/app/components/FormLogin";
+import FormLogin from "@/app/_components/FormLogin";
 import Link from "next/link";
 export default async function LoginPage() {
   return (

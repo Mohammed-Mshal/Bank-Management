@@ -1,4 +1,9 @@
 import React from "react";
+import AsideDashboard from "../_components/AsideDashboard";
 export default async function DashboardPage() {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <AsideDashboard />
+    </div>
+  );
 }

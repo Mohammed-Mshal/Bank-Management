@@ -1,4 +1,4 @@
-import SignupForm from "@/app/components/SignupForm";
+import SignupForm from "@/app/_components/SignupForm";
 import Link from "next/link";
 export default async function SignupPage() {
   return (
