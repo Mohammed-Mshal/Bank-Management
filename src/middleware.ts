@@ -20,6 +20,8 @@ export async function middleware(request: NextRequest) {
     if (currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
         const session = await decrypt(cookie)
+        console.log(cookie,'++++++',session,'++++++',currentPath);
+        
         if (session) {
             return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
         }

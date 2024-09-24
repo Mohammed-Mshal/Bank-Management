@@ -60,8 +60,6 @@ export async function login(state, formData: FormData) {
         const isExistingUser = await prisma.user.findUnique({
             where: { email }
         })
-        console.log(isExistingUser);
-
         if (!isExistingUser) {
             return {
                 errors: 'Email Is Not Exist',
