@@ -8,27 +8,9 @@ export async function middleware(request: NextRequest) {
     const isProtectedRoute = protectedRoute.includes(currentPath)
     if (isProtectedRoute && !currentPath.startsWith(authRoutes)) {
         const cookie = cookies().get('session')?.value
-        const session = await decrypt(cookie)
+        const session = await decrypt(cookie)        
         if (!session?.userId) {
             return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
-        }
-    }
-    if (currentPath.startsWith(authRoutes)) {
-        const cookie = cookies().get('session')?.value
-        const session = await decrypt(cookie)
-        if (session?.userId) {
-            return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-        }
-    }
-    if (currentPath === '/') {
-        const cookie = cookies().get('session')?.value
-        const session = await decrypt(cookie)
-        if (session?.userId) {
-            return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-        }
-        else {
-            return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
-
         }
     }
     return NextResponse.next()
