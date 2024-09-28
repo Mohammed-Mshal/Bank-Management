@@ -72,11 +72,11 @@ export async function login(state, formData: FormData) {
             }
         }
         await createSession(isExistingUser.id, isExistingUser.role)
-    } catch (error) {
-        console.log(error);
+    } catch (errors) {
+        console.log(errors);
 
         return {
-            errors: <string>error
+            errors: <string>errors
         }
     }
     await prisma.$disconnect()

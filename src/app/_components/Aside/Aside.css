@@ -1,0 +1,42 @@
+.group:has(.menuOpen) {
+    max-width: 16rem
+        /* 256px */
+    ;
+}
+
+.group:not(:has(.menuOpen)) {
+    max-width: 6rem
+        /* 96px */
+    ;
+}
+
+.group:has(.menuOpen) .title_site {
+    width: fit-content;
+    opacity: 1;
+}
+
+.group:not(:has(.menuOpen)) .title_site {
+    width: 0px;
+    opacity: 0;
+
+}
+
+.group:has(.menuOpen) .iconItem {
+    flex: 0 1 auto;
+}
+
+.group:not(:has(.menuOpen)) .iconItem {
+    margin-inline: auto;
+}
+
+.group:has(.menuOpen) .titleLink {
+    width: fit-content;
+    opacity: 1;
+    position: static;
+}
+
+.group:not(:has(.menuOpen)) .titleLink {
+    width: 0;
+    opacity: 0;
+    position: absolute;
+}

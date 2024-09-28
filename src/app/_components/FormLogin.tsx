@@ -1,12 +1,14 @@
 "use client";
 import { login } from "@/action/user";
 import React from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 const initialState = {
   errors: "",
 };
 export default function FormLogin() {
-  const [state, action, pending] = useFormState(login, initialState);
+  const [state, action] = useFormState(login, initialState);
+  const { pending } = useFormStatus();
+
   return (
     <form action={action} className="flex flex-col gap-4 mb-4">
       <div className="containerInput w-full">
