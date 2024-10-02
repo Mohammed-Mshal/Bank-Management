@@ -27,7 +27,7 @@ export default function ListOfItem() {
   const pathName = usePathname();
 
   return (
-    <ul className="listItem text-xl my-8 text-white flex flex-col gap-4">
+    <ul className="listItem text-xl mt-4 lg:mt-8 mb-8 text-white flex flex-col gap-4">
       {listItemContent.map((item, index) => {
         return (
           <li key={index}>

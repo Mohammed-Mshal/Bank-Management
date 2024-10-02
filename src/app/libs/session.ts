@@ -44,13 +44,14 @@ export async function updateCookies(request: NextRequest) {
     if (!session) return;
     const parsed = await decrypt(session) as JWTPayload
     parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+
     const res = NextResponse.next()
     res.cookies.set({
         name: 'session',
         value: await encrypt(parsed),
         httpOnly: true,
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
-    })
+        expires: parsed.expires as Date
+    })    
     return res
 }
 export async function deleteSession() {

@@ -15,7 +15,7 @@ export default function DashboardLayout({
   return (
     <div className=" min-h-screen bg-black flex">
       <AsideDashboard />
-      <div className="flex-1 px-2 py-4 ">
+      <div className="flex-1 px-2 py-4 main_content">
         <HeaderDashboard />
         {children}
       </div>

@@ -1,0 +1,9 @@
+.containerImage:has(.toggleProfileMenu.menuOpen)+.listProfileMenu {
+    min-height: 6rem;
+    opacity: 1;
+}
+
+.containerImage:not(:has(.toggleProfileMenu.menuOpen))+.listProfileMenu {
+    height: 0px;
+    opacity: 0;
+}

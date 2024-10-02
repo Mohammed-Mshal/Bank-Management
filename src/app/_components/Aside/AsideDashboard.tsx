@@ -4,10 +4,11 @@ import ListOfItem from "../../_Elements/ListOfItem";
 import { deleteSession } from "../../libs/session";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import "./Aside.css";
+import SearchInput from "@/app/_Elements/SearchInput";
 export default function AsideDashboard() {
   return (
     <aside
-      className={`sticky top-0 min-h-screen group px-2 py-4 flex flex-1 transition-all duration-500 overflow-hidden`}
+      className={`lg:sticky absolute top-0 min-h-screen group px-2 py-4 flex flex-1 transition-all duration-500 overflow-hidden`}
     >
       <div className="containerAside px-3 py-4 bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl flex-1 flex flex-col">
         <div
@@ -20,6 +21,9 @@ export default function AsideDashboard() {
           </h2>
           <ToggleMenu />
         </div>
+        <div className="mt-8 block lg:hidden">
+          <SearchInput />
+        </div>
         <ListOfItem />
         <form
           action={async () => {
@@ -29,8 +33,10 @@ export default function AsideDashboard() {
           className={` text-xl text-white rounded-xl transition-all duration-500 hover:bg-red-800 w-full mt-auto`}
         >
           <button className="flex items-center gap-2 w-full py-3 px-4">
-            <LiaSignOutAltSolid  className="iconItem"/>
-            <span className="transition-all duration-500 text-nowrap overflow-hidden titleLink">Sign out</span>
+            <LiaSignOutAltSolid className="iconItem" />
+            <span className="transition-all duration-500 text-nowrap overflow-hidden titleLink">
+              Sign out
+            </span>
           </button>
         </form>
       </div>

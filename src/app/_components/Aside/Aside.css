@@ -1,42 +1,77 @@
-.group:has(.menuOpen) {
-    max-width: 16rem
-        /* 256px */
-    ;
+aside.group:has(.menuOpen) {
+    max-width: 16rem;
 }
 
-.group:not(:has(.menuOpen)) {
-    max-width: 6rem
-        /* 96px */
-    ;
+aside.group:not(:has(.menuOpen)) {
+    max-width: 6rem;
 }
 
-.group:has(.menuOpen) .title_site {
+aside.group:has(.menuOpen) .title_site {
     width: fit-content;
     opacity: 1;
 }
 
-.group:not(:has(.menuOpen)) .title_site {
+aside.group:not(:has(.menuOpen)) .title_site {
     width: 0px;
     opacity: 0;
 
 }
 
-.group:has(.menuOpen) .iconItem {
+aside.group:has(.menuOpen) .iconItem {
     flex: 0 1 auto;
 }
 
-.group:not(:has(.menuOpen)) .iconItem {
+aside.group:not(:has(.menuOpen)) .iconItem {
     margin-inline: auto;
 }
 
-.group:has(.menuOpen) .titleLink {
+aside.group:has(.menuOpen) .titleLink {
     width: fit-content;
     opacity: 1;
     position: static;
 }
 
-.group:not(:has(.menuOpen)) .titleLink {
+aside.group:not(:has(.menuOpen)) .titleLink {
     width: 0;
     opacity: 0;
     position: absolute;
+}
+
+@media (max-width:1024px) {
+    aside {
+        z-index: 100;
+        width: 100vw !important;
+        max-width: 260px !important;
+    }
+    
+    aside .toggle_aside{
+        display: none;
+    }
+
+    body:has(.navbar_dashboard .toggle_aside.menuOpen) aside {
+        left: 0;
+    }
+
+    body:not(:has(.navbar_dashboard .toggle_aside.menuOpen)) aside {
+        left: -200vw;
+    }
+
+    aside.group:not(:has(.menuOpen)) .title_site,
+    aside.group:has(.menuOpen) .title_site {
+        width: fit-content;
+        opacity: 1;
+    }
+
+    aside.group:has(.menuOpen) .iconItem,
+    aside.group:not(:has(.menuOpen)) .iconItem {
+        flex: none;
+        margin-inline: 0;
+    }
+
+    aside.group:has(.menuOpen) .titleLink,
+    aside.group:not(:has(.menuOpen)) .titleLink {
+        width: fit-content;
+        opacity: 1;
+        position: static;
+    }
 }

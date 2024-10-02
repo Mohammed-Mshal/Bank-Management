@@ -1,14 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CgClose } from "react-icons/cg";
 import { CiMenuFries } from "react-icons/ci";
 
 export default function ToggleMenu() {
   const [toggleMenu, setToggleMenu] = useState(false);
-
+  useEffect(() => {
+    document?.querySelector(".main_content")?.addEventListener("click", () => {
+      !toggleMenu && setToggleMenu(true);
+    });
+  });
   return (
     <div
       className={`toggle_aside  ${
-        toggleMenu ? "flex-1 flex justify-center" : "flex-initial menuOpen"
+        toggleMenu
+          ? "lg:flex-1 lg:flex lg:justify-center flex-none"
+          : "flex-initial menuOpen"
       }`}
     >
       <button
@@ -18,7 +25,7 @@ export default function ToggleMenu() {
         className="btn_toggle text-xl flex items-center outline-none"
         title="toggle"
       >
-        <CiMenuFries />
+        {!toggleMenu ? <CgClose /> : <CiMenuFries />}
       </button>
     </div>
   );

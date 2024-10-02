@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 import { type NextRequest, NextResponse } from "next/server"
-import { decrypt } from "./app/libs/session"
+import { decrypt, updateCookies } from "./app/libs/session"
 export async function middleware(request: NextRequest) {
     const authRoutes = '/auth'
     const protectedRoute = ['/dashboard']
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
         }
     }
-    return NextResponse.next()
+    return await updateCookies(request)
 }
 
 
