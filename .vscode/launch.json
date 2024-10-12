@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "https://bank-management-rust.vercel.app/auth/login",
+            "request": "launch",
+            "url": "https://bank-management-rust.vercel.app/auth/login"
+        }
+    ]
+}
