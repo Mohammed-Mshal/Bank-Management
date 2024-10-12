@@ -1,25 +1,17 @@
 import React from "react";
-import TitlePage from "../_Elements/TitlePage";
-import Notification from "./Notification/Notification";
-import Profile from "./ProfileMenu/Profile";
-import ToggleMenu from "../_Elements/ToggleMenu";
-import SearchInput from "../_Elements/SearchInput";
+import ListTabs from "../_Elements/ListTabs";
+import DateFilter from "../_Elements/DateFilter";
+import FilterSelect from "../_Elements/FilterSelect";
 
 export default function HeaderDashboard() {
   return (
-    <div className=" px-3 py-4 ">
-      <div className="navbar_dashboard flex justify-between items-center">
-        <TitlePage />
-        <div className="flex items-center gap-2">
-          <div className="hidden lg:block">
-            <SearchInput />
-          </div>
-          <Notification />
-          <Profile />
-          <div className="flex items-center cursor-pointer lg:hidden text-white justify-stretch">
-            <ToggleMenu />
-          </div>
-        </div>
+    <div className="border-b-2 border-white border-opacity-20 flex justify-between md:flex-row flex-col-reverse">
+      <div className="containerListTabs">
+        <ListTabs />
+      </div>
+      <div className="containerFiltering flex flex-col sm:flex-row sm:items-center items-stretch gap-4 flex-1 justify-center md:justify-end  my-4 md:my-0">
+        <DateFilter />
+        <FilterSelect />
       </div>
     </div>
   );

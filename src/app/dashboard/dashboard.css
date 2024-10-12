@@ -1,0 +1,10 @@
+.containerDate>div>div>div {
+    background: black !important;
+    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(100px);
+    
+}
+
+.data-\[hover\=true\]\:bg-default-50[data-hover="true"] {
+    background-color: rgb(255, 255, 255,.2);
+}

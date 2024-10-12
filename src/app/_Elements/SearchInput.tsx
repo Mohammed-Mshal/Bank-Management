@@ -5,7 +5,7 @@ export default function SearchInput() {
   return (
     <form
       action=""
-      className="relative bg-white bg-opacity-20 backdrop-blur-lg rounded-lg outline-none text-white px-4 py-2 flex items-center gap-2"
+      className="relative bg-white bg-opacity-5 backdrop-blur-lg rounded-lg outline-none text-white px-4 py-2 flex items-center gap-2"
     >
       <label htmlFor="search" className="cursor-pointer">
         <BiSearch />

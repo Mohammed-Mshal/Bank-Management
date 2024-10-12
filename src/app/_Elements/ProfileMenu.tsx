@@ -8,7 +8,7 @@ import { deleteSession } from "../libs/session";
 export default function ProfileMenu() {
   return (
     <ul
-      className={`listProfileMenu w-screen max-w-40 overflow-hidden listNotification absolute right-0 top-[calc(100%+10px)] bg-white bg-opacity-20 backdrop-blur-xl rounded-xl transition-all flex flex-col`}
+      className={`listProfileMenu w-screen max-w-40 z-30 overflow-hidden listNotification absolute right-0 top-[calc(100%+10px)] bg-white bg-opacity-5 backdrop-blur-xl rounded-xl transition-all flex flex-col`}
     >
       <li>
         <Link

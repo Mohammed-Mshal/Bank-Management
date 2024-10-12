@@ -41,12 +41,12 @@ export default function Notification() {
         onClick={() => {
           setOpenNotification(!openNotification);
         }}
-        className="text-white -z-10 btnNotification text-lg bg-white bg-opacity-20 backdrop-blur-lg rounded-full md:w-10 w-8  md:h-10 h-8  md:p-3 p-2 cursor-pointer "
+        className="text-white -z-10 btnNotification text-lg bg-white bg-opacity-5 backdrop-blur-lg rounded-full md:w-10 w-8  md:h-10 h-8  md:p-3 p-2 cursor-pointer "
       />
       <ul
         className={`${
           openNotification ? "min-h-24 opacity-100 py-4" : "h-0 opacity-0  py-0"
-        } w-screen max-w-xs overflow-hidden listNotification absolute md:right-0 -right-16 top-[calc(100%+10px)] bg-white bg-opacity-20 backdrop-blur-xl rounded-xl transition-all flex flex-col`}
+        } w-screen max-w-xs overflow-hidden listNotification absolute md:right-0 -right-16 top-[calc(100%+10px)] bg-white bg-opacity-5 backdrop-blur-xl rounded-xl transition-all flex flex-col z-30`}
       >
         {listNotification?.length > 0 ? (
           listNotification.map((notification, index) => {

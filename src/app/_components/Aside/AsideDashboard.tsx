@@ -8,9 +8,9 @@ import SearchInput from "@/app/_Elements/SearchInput";
 export default function AsideDashboard() {
   return (
     <aside
-      className={`lg:sticky absolute top-0 min-h-screen group px-2 py-4 flex flex-1 transition-all duration-500 overflow-hidden`}
+      className={`lg:sticky fixed top-0 h-screen group px-2 py-4 flex flex-1 transition-all duration-500 overflow-hidden`}
     >
-      <div className="containerAside px-3 py-4 bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl flex-1 flex flex-col">
+      <div className="containerAside px-3 py-4 bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl flex-1 flex flex-col">
         <div
           className={`headerAside flex items-center justify-between text-white text-opacity-85`}
         >

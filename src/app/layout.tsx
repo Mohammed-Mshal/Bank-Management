@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cairo.className}`}>
+      <body className={`${cairo.className} dark`}>
         <Toaster />
         {children}
       </body>

@@ -40,8 +40,8 @@ aside.group:not(:has(.menuOpen)) .titleLink {
 @media (max-width:1024px) {
     aside {
         z-index: 100;
-        width: 100vw !important;
-        max-width: 260px !important;
+        width: fit-content !important;
+        max-width: 100vw !important;
     }
     
     aside .toggle_aside{
