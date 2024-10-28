@@ -23,15 +23,15 @@ export async function decrypt(session) {
     }
 
 }
-export async function createSession(userId, role) {
+export async function createSession(userId) {
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
-    const session = await encrypt({ userId, role, expires })
-    cookies().set('session', session, { httpOnly: true, expires, sameSite: 'lax', path: '/' })
+    const session = await encrypt({ userId, expires });
+    (await cookies()).set('session', session, { httpOnly: true, expires, sameSite: 'lax', path: '/' })
 }
 
 
 export async function verifySession() {
-    const userCookie = cookies().get('session')?.value;
+    const userCookie = (await cookies()).get('session')?.value;
     if (userCookie) {
         const session = await decrypt(userCookie)
         return session
@@ -51,10 +51,10 @@ export async function updateCookies(request: NextRequest) {
         value: await encrypt(parsed),
         httpOnly: true,
         expires: parsed.expires as Date
-    })    
+    })
     return res
 }
 export async function deleteSession() {
-    cookies().delete('session')
+    (await cookies()).delete('session')
     redirect('/auth/login')
 }

@@ -1,14 +1,73 @@
-import ProfileMenu from "@/app/_Elements/ProfileMenu";
-import ToggleProfileMenu from "@/app/_Elements/ToggleProfileMenu";
 import React from "react";
 import "./Profile.css";
-export default function Profile() {
+import { getDataUser } from "@/action/info";
+import { CiSettings } from "react-icons/ci";
+import { SlArrowDown } from "react-icons/sl";
+import Link from "next/link";
+import { deleteSession } from "@/app/libs/session";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import Image from "next/image";
+import { CgProfile } from "react-icons/cg";
+export default async function Profile() {
+  const dataUser = await getDataUser();
+
   return (
     <div className="relative">
-      <div className="containerImage cursor-pointer">
-        <ToggleProfileMenu />
-      </div>
-      <ProfileMenu />
+      <Popover>
+        <PopoverTrigger  className="flex items-center md:gap-2 gap-1">
+            <Image
+              src={"/static/images/profileImage2.jpg"}
+              height={40}
+              width={40}
+              alt="Profile"
+              className="rounded-full h-8 w-8 md:h-10 md:w-10 object-cover"
+            />
+            <SlArrowDown className="text-white text-sm" />
+        </PopoverTrigger>
+        <PopoverContent className="p-0 rounded-xl overflow-hidden" align="end">
+          <div className="text-center px-4 py-2">{dataUser?.email}</div>
+          <div>
+            <Link
+              href={"/profile"}
+              className="flex items-center gap-2 px-4 py-2 text-white hover:bg-indigo-700 transition-all duration-500"
+            >
+              <CgProfile />
+              Profile
+            </Link>
+          </div>
+          <div>
+            <Link
+              href={"#"}
+              className="flex items-center gap-2 px-4 py-2 text-white hover:bg-indigo-700 transition-all duration-500"
+            >
+              <CiSettings />
+              Setting
+            </Link>
+          </div>
+          <div>
+            <form
+              action={async () => {
+                "use server";
+                await deleteSession();
+              }}
+              className="w-full"
+            >
+              <button
+                type="submit"
+                className="flex items-center gap-2 px-4 py-2 text-white hover:bg-red-600  w-full transition-all duration-500"
+              >
+                <LiaSignOutAltSolid />
+                Sign Out
+              </button>
+            </form>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }

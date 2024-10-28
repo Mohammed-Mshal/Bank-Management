@@ -38,7 +38,7 @@ const invoices = [
 export default function Transactions() {
   return (
     <div className="transaction flex flex-1 bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl border">
-      <div className="container p-4">
+      <div className="container max-w-full p-4">
         <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>

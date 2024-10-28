@@ -12,7 +12,7 @@ export default function DateFilter() {
   });
   return (
     <div className="flex containerDate h-10">
-      <Datepicker
+      <Datepicker 
         classNames={{
           toggleButton() {
             return "absolute right-2 top-1/2 -translate-y-1/2 text-white";

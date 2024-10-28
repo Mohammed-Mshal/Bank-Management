@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { register } from "@/action/user";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 const initialState = {
   errors: "",
 };
 export default function SignupForm() {
-  const [state, action, pending] = useFormState(register, initialState);
+  const [state, action, pending] = useActionState(register, initialState);
   return (
     <form action={action} className="flex flex-col gap-4 mb-4">
       <div className="containerInput w-full">
@@ -51,7 +50,11 @@ export default function SignupForm() {
       <button
         disabled={pending}
         type="submit"
-        className=" w-full max-w-40 bg-[#A263F3] py-2 rounded-lg mx-auto text-white transition-all duration-500 hover:shadow-lg hover:shadow-[#a163f33c]"
+        className={`w-full max-w-40 ${
+          pending
+            ? "bg-slate-400 shadow-none cursor-not-allowed"
+            : "bg-[#A263F3] hover:shadow-[#a163f33c]"
+        } py-2 rounded-lg mx-auto text-white transition-all duration-500 hover:shadow-lg`}
       >
         {pending ? "Loading..." : "Create Account"}
       </button>

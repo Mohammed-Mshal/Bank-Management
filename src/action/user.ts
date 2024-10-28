@@ -18,7 +18,8 @@ export async function register(state, formData: FormData) {
                 errors: 'Please Fill All Fields',
             }
         }
-        const isExistingUser = await prisma.user.findUnique({
+
+        const isExistingUser = await prisma.customer.findUnique({
             where: { email }
         })
         if (isExistingUser) {
@@ -27,17 +28,21 @@ export async function register(state, formData: FormData) {
             }
         }
         const hashingPassword = await hash(password, 12)
-        const userCreated = await prisma.user.create({
+        const userCreated = await prisma.customer.create({
             data: {
                 firstName,
                 lastName,
                 email,
                 password: hashingPassword,
                 image: '',
+                address: '',
+                dateOfBirth: '',
+                phoneNumber: ''
             }
         })
-        await createSession(userCreated.id, userCreated.role)
+        await createSession(userCreated.id)
     } catch (error) {
+        console.log(error)
         await prisma.$disconnect()
         return {
             errors: 'Error While Creating Account',
@@ -57,7 +62,7 @@ export async function login(state, formData: FormData) {
                 errors: 'Please Fill All Fields',
             }
         }
-        const isExistingUser = await prisma.user.findUnique({
+        const isExistingUser = await prisma.customer.findUnique({
             where: { email }
         })
         if (!isExistingUser) {
@@ -71,7 +76,7 @@ export async function login(state, formData: FormData) {
                 errors: 'Password Is Not Valid'
             }
         }
-        await createSession(isExistingUser.id, isExistingUser.role)
+        await createSession(isExistingUser.id)
     } catch (errors) {
         console.log(errors);
 

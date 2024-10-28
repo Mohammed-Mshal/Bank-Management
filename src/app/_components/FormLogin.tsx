@@ -1,13 +1,11 @@
 "use client";
 import { login } from "@/action/user";
-import React from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import React, { useActionState } from "react";
 const initialState = {
   errors: "",
 };
 export default function FormLogin() {
-  const [state, action] = useFormState(login, initialState);
-  const { pending } = useFormStatus();
+  const [state, action, pending] = useActionState(login, initialState);
 
   return (
     <form action={action} className="flex flex-col gap-4 mb-4">
@@ -34,7 +32,11 @@ export default function FormLogin() {
       )}
       <button
         disabled={pending}
-        className=" w-full max-w-40 bg-[#A263F3] py-2 rounded-lg mx-auto text-white transition-all duration-500 hover:shadow-lg hover:shadow-[#a163f33c]"
+        className={`w-full max-w-40 ${
+          pending
+            ? "bg-slate-400 hover:shadow-none cursor-not-allowed"
+            : "bg-[#A263F3] hover:shadow-[#a163f33c]"
+        } py-2 rounded-lg mx-auto text-white transition-all duration-500 hover:shadow-lg `}
       >
         {pending ? "Loading..." : "Login"}
       </button>

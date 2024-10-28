@@ -18,9 +18,108 @@ model User {
   firstName String
   lastName  String
   email     String   @unique
-  password  String
   role      String   @default("user")
   image     String
   createdAt DateTime @default(now())
   upadtedAt DateTime @updatedAt
+}
+
+model Customer {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String
+  lastName    String
+  dateOfBirth String
+  email       String    @unique
+  password    String
+  phoneNumber String
+  address     String
+  image       String
+  createdAt   DateTime  @default(now())
+  upadtedAt   DateTime  @updatedAt
+  Account     Account[]
+  Loan        Loan[]
+}
+
+model Account {
+  id                      String        @id @default(auto()) @map("_id") @db.ObjectId
+  accountType             AccountType
+  balance                 Float
+  createdAt               DateTime      @default(now())
+  upadtedAt               DateTime      @updatedAt
+  customerId              String        @db.ObjectId
+  customer                Customer      @relation(fields: [customerId], references: [id])
+  Transaction             Transaction[]
+  accountUsingDescription String
+  password                String
+  accountStatus           AccountStatus @default(PENDING)
+}
+
+model Transaction {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  transactionType TransactionType
+  amount          Float
+  balance         DateTime
+  transactionDate DateTime        @default(now())
+  accountId       String          @db.ObjectId
+  account         Account         @relation(fields: [accountId], references: [id])
+  description     String
+}
+
+model Loan {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  customerId   String     @db.ObjectId
+  customer     Customer   @relation(fields: [customerId], references: [id])
+  loanType     LoanType
+  amount       Float
+  interestRate Float
+  startDate    DateTime
+  endDate      DateTime
+  status       StatusLoan
+}
+
+model Branch {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  branchName    String
+  location      String
+  contactNumber String
+  Employee      Employee[]
+}
+
+model Employee {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName   String
+  lastName    String
+  position    String
+  branchId    String   @db.ObjectId
+  email       String
+  phoneNumber String
+  hireDate    DateTime
+  branch      Branch   @relation(fields: [branchId], references: [id])
+}
+
+enum TransactionType {
+  WITHDRAWAL
+  DEPOSIT
+}
+
+enum AccountType {
+  SAVING
+  CHECKING
+}
+
+enum AccountStatus {
+  VERIFY
+  PENDING
+  BANDING
+}
+
+enum LoanType {
+  HOME
+  PERSONAL
+  AUTO
+}
+
+enum StatusLoan {
+  ACTIVE
+  PAID_OF
 }

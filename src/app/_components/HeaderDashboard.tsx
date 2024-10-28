@@ -1,6 +1,5 @@
 import React from "react";
 import ListTabs from "../_Elements/ListTabs";
-import DateFilter from "../_Elements/DateFilter";
 import FilterSelect from "../_Elements/FilterSelect";
 
 export default function HeaderDashboard() {
@@ -10,7 +9,6 @@ export default function HeaderDashboard() {
         <ListTabs />
       </div>
       <div className="containerFiltering flex flex-col sm:flex-row sm:items-center items-stretch gap-4 flex-1 justify-center md:justify-end  my-4 md:my-0">
-        <DateFilter />
         <FilterSelect />
       </div>
     </div>
