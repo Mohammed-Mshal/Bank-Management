@@ -1,5 +1,4 @@
 import { Account } from "@prisma/client";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react"
 
