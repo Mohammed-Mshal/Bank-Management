@@ -1,6 +1,5 @@
 import React from "react";
 import ListTabs from "../_Elements/ListTabs";
-import FilterSelect from "../_Elements/FilterSelect";
 
 export default function HeaderDashboard() {
   return (

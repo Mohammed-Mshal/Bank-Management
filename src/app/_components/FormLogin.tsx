@@ -1,10 +1,7 @@
 "use client";
-import { login } from "@/action/user";
-import React, { useActionState, useState } from "react";
+import React, {  useState } from "react";
 import { useLogin } from "../hooks/useLogin";
-const initialState = {
-  errors: "",
-};
+
 export default function FormLogin() {
   const { login, error, loading } = useLogin();
   const [email, setEmail] = useState("");
