@@ -12,7 +12,7 @@ export function useLogin() {
                 setError('Please Fill All Fields')
             }
             setLoading(true)
-            const data = await fetch(`${checkEnvironment()}/api/user/login`, {
+            const data = await fetch(`/api/user/login`, {
                 method: 'POST',
                 headers: {
                 },
@@ -28,13 +28,14 @@ export function useLogin() {
             }
             setError(null)
             setLoading(false);
+            route.push('/dashboard')
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.log(error);
             setLoading(false);
             
         }
-        route.push('/dashboard')
     }
     return { login, error, loading }
 }
