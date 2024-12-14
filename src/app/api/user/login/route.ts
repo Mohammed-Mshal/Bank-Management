@@ -1,7 +1,6 @@
 import { createSession } from '@/app/libs/session'
 import { PrismaClient } from '@prisma/client'
 import { compare } from "bcryptjs"
-import { redirect } from 'next/navigation'
 import { NextRequest, NextResponse } from 'next/server'
 const prisma = new PrismaClient()
 export async function POST(req: NextRequest) {

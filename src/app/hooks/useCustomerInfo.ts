@@ -1,5 +1,4 @@
 import { useState } from "react";
-import checkEnvironment from "../libs/checkEnvironment";
 export interface CustomerInfo {
     id: string;
     firstName: string;
