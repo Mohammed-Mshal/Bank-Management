@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import isMongoId from 'validator/lib/isMongoId'
 import ImageKit from "imagekit";
+import mongoose from 'mongoose'
 const imageKit = new ImageKit({
     publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY as string,
     privateKey: process.env.PRIVATE_KEY as string,
@@ -46,22 +47,30 @@ export async function PATCH(req: NextRequest) {
         })
         const data = await req.formData()
         const file: File | null = data.get('profile_image') as unknown as File
-
+        const dateOfBirth = <string>data.get('dateOfBirth')
+        const phoneNumber = <string>data.get('phoneNumber')
+        const address = <string>data.get('address')
+        const firstName = <string>data.get('firstName')
+        const lastName = <string>data.get('lastName')
+        const gender = <string>data.get('gender')
+        const residentialAddress = <string>data.get('residentialAddress')
+        const defaultImage: string | null = <string>data.get('image')
         let imageUrl: string = '';
         let imageId: string = '';
         if (file) {
-
             const bytes = await file.arrayBuffer()
             const bufferImageProfile = Buffer.from(bytes)
-            console.log('ssss');
+
             user?.imageId && user?.imageId.length > 0 &&
                 await imageKit.deleteFile(user?.imageId as string)
+            const newId = new mongoose.Types.ObjectId();
             const resultUploading = await imageKit.upload({
                 useUniqueFileName: false,
                 file: bufferImageProfile,
-                fileName: `${userId}.${file.type.split('/')[1]}`,
+                fileName: `${userId}-${newId}.${file.type.split('/')[1]}`,
                 folder: 'Bank_Management',
                 checks: `"file.size" < "2mb"`,
+
                 extensions: [
                     {
                         name: "google-auto-tagging",
@@ -74,15 +83,7 @@ export async function PATCH(req: NextRequest) {
             imageId = resultUploading.fileId as string
 
         }
-        const dateOfBirth = <string>data.get('dateOfBirth')
-        const phoneNumber = <string>data.get('phoneNumber')
-        const address = <string>data.get('address')
-        const firstName = <string>data.get('firstName')
-        const lastName = <string>data.get('lastName')
-        const gender = <string>data.get('gender')
-        const residentialAddress = <string>data.get('residentialAddress')
-        const defaultImage: string | null = <string>data.get('image')
-        if (defaultImage != null) {
+        if (defaultImage == "https://ik.imagekit.io/alphaTeam/Bank_Management/default.jpg") {
             user?.imageId && user?.imageId.length > 0 &&
                 await imageKit.deleteFile(user?.imageId as string)
         }

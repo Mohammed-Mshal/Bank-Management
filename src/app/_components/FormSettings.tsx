@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { CustomerInfo, useCustomerInfo } from "../hooks/useCustomerInfo";
@@ -67,6 +67,9 @@ export default function FormSettings() {
     getInfo();
   }, []);
   useEffect(() => {
+    console.log(customerInfo);
+  }, [customerInfo]);
+  useEffect(() => {
     setCustomerInfo({ ...userInfo });
     const dateInfo =
       userInfo.dateOfBirth && new Date(userInfo.dateOfBirth as string);
@@ -120,6 +123,7 @@ export default function FormSettings() {
             className="bg-red-700  hover:bg-red-900 transition-all cursor-pointer px-4 lg:py-4 py-2 rounded-lg"
             type="button"
             onClick={() => {
+              imageProfile.current.files = null;
               customerInfo &&
                 setCustomerInfo({
                   ...customerInfo,
