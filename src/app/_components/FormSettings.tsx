@@ -66,9 +66,7 @@ export default function FormSettings() {
     };
     getInfo();
   }, []);
-  useEffect(() => {
-    console.log(customerInfo);
-  }, [customerInfo]);
+
   useEffect(() => {
     setCustomerInfo({ ...userInfo });
     const dateInfo =
