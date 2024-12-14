@@ -1,5 +1,4 @@
 import { useState } from "react"
-import checkEnvironment from "../libs/checkEnvironment";
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
