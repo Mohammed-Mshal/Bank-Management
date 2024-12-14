@@ -1,38 +1,40 @@
 import { useState } from "react"
+import checkEnvironment from "../libs/checkEnvironment";
+import { useRouter } from "next/navigation";
 
-export function useCreateAccount() {
+export function useLogin() {
     const [error, setError] = useState<null | string>(null)
     const [loading, setLoading] = useState(false)
-
-    const createAccount = async (accountType,
-        accountPassword,
-        accountDescription) => {
+    const route=useRouter()
+    const login = async (email: string, password: string) => {
         try {
-            if (!accountType || !accountPassword || !accountDescription) {
+            if (!email || !password) {
                 setError('Please Fill All Fields')
             }
             setLoading(true)
-            const data = await fetch('/api/accounts', {
+            const data = await fetch(`${checkEnvironment()}/api/user/login`, {
                 method: 'POST',
                 headers: {
                 },
                 body: JSON.stringify({
-                    typeAccount: accountType,
-                    passwordAccount: accountPassword,
-                    descriptionAccount: accountDescription
+                    email: email,
+                    password: password
                 })
             })
             const resData = await data.json()
-            if (data.status === 400) {
+            if (!data.ok) {
                 setError(resData.error)
                 setLoading(false)
             }
             setError(null)
-            setLoading(false)
+            setLoading(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            setError(error.message)
+            console.log(error);
+            setLoading(false);
+            
         }
+        route.push('/dashboard')
     }
-    return { createAccount, error, loading }
+    return { login, error, loading }
 }

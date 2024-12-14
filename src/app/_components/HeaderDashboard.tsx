@@ -8,9 +8,6 @@ export default function HeaderDashboard() {
       <div className="containerListTabs">
         <ListTabs />
       </div>
-      <div className="containerFiltering flex flex-col sm:flex-row sm:items-center items-stretch gap-4 flex-1 justify-center md:justify-end  my-4 md:my-0">
-        <FilterSelect />
-      </div>
     </div>
   );
 }

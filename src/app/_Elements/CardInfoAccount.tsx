@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { CarouselItem } from "@/components/ui/carousel";
 import { AccountStatus } from "@prisma/client";
 
 type propsCardInfo = {
@@ -18,7 +17,7 @@ export default function CardInfoAccount({
   accountStatus,
 }: propsCardInfo) {
   return (
-    <CarouselItem
+    <div
       className={`cardInfo 
         min-h-32
       transition-all ease-in-out duration-500 overflow-hidden
@@ -26,11 +25,11 @@ export default function CardInfoAccount({
       from-gray-600 to-black relative before:absolute before:top-0 before:left-0 before:h-full
       before:w-full before:opacity-0 before:transition-all before:ease-in-out before:duration-500
       before:from-indigo-500 before:to-black hover:before:opacity-100 before:-z-10
-      text-white backdrop-blur-lg rounded-2xl xl:basis-1/4 lg:basis-1/3 basis-1/2 
-      border-gray-800 border-2 me-4 `}
+      text-white backdrop-blur-lg rounded-2xl flex-1 max-w-[500px] min-w-[300px] 
+      border-gray-800 border-2`}
     >
       <Link
-        href={`/accounts/${idAccount}`}
+        href={`/dashboard/accounts/${idAccount}`}
         className="flex flex-col lg:gap-6 gap-2 md:p-4 p-2"
       >
         <div className="headerCard flex justify-between items-center">
@@ -59,6 +58,6 @@ export default function CardInfoAccount({
           <p className="block">ID:{idAccount}</p>
         </div>
       </Link>
-    </CarouselItem>
+    </div>
   );
 }

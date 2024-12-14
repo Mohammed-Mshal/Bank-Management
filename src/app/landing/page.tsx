@@ -18,7 +18,7 @@ export default function LandingPage() {
       <OurServices />
       <ContactUs />
       <Footer />
-      <div className="text-center text-lg py-2 px-4 text-[var(--dark-violet)]">
+      <div className="text-center text-lg py-2 px-4 text-[var(--dark-violet)] bg-white">
         &copy;2024 - All Right Reversed To Mohammed Al Mashal
       </div>
     </div>

@@ -2,24 +2,23 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
-import { BsClock } from "react-icons/bs";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdManageAccounts } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 
 const listItemContent = [
-  {
-    titleLink: "Overview",
-    link: "/overview",
-    icon: <BsClock />,
-  },
   {
     titleLink: "Dashboard",
     link: "/dashboard",
     icon: <MdDashboard />,
   },
   {
+    titleLink: "Accounts",
+    link: "/dashboard/accounts",
+    icon: <MdManageAccounts />,
+  },
+  {
     titleLink: "Setting",
-    link: "/setting",
+    link: "/dashboard/setting",
     icon: <FiSettings />,
   },
 ];

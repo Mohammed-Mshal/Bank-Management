@@ -21,23 +21,27 @@ model User {
   role      String   @default("user")
   image     String
   createdAt DateTime @default(now())
-  upadtedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 model Customer {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstName   String
-  lastName    String
-  dateOfBirth String
-  email       String    @unique
-  password    String
-  phoneNumber String
-  address     String
-  image       String
-  createdAt   DateTime  @default(now())
-  upadtedAt   DateTime  @updatedAt
-  Account     Account[]
-  Loan        Loan[]
+  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
+  firstName          String
+  lastName           String
+  dateOfBirth        String
+  email              String         @unique
+  password           String
+  phoneNumber        String
+  gender             String
+  address            String
+  image              String
+  imageId            String
+  residentialAddress String
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  Account            Account[]
+  Loan               Loan[]
+  Notification       Notification[]
 }
 
 model Account {
@@ -45,7 +49,7 @@ model Account {
   accountType             AccountType
   balance                 Float
   createdAt               DateTime      @default(now())
-  upadtedAt               DateTime      @updatedAt
+  updatedAt               DateTime      @updatedAt
   customerId              String        @db.ObjectId
   customer                Customer      @relation(fields: [customerId], references: [id])
   Transaction             Transaction[]
@@ -55,14 +59,14 @@ model Account {
 }
 
 model Transaction {
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
-  transactionType TransactionType
-  amount          Float
-  balance         DateTime
-  transactionDate DateTime        @default(now())
-  accountId       String          @db.ObjectId
-  account         Account         @relation(fields: [accountId], references: [id])
-  description     String
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount             Float
+  transactionDate    DateTime @default(now())
+  accountId          String?  @db.ObjectId
+  account            Account? @relation(fields: [accountId], references: [id])
+  description        String
+  idReceiverAccount  String?  @db.ObjectId
+  idReceiverCustomer String?  @db.ObjectId
 }
 
 model Loan {
@@ -97,9 +101,14 @@ model Employee {
   branch      Branch   @relation(fields: [branchId], references: [id])
 }
 
-enum TransactionType {
-  WITHDRAWAL
-  DEPOSIT
+model Notification {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  titleMessage String
+  textMessage  String
+  customerId   String   @db.ObjectId
+  customer     Customer @relation(fields: [customerId], references: [id])
 }
 
 enum AccountType {

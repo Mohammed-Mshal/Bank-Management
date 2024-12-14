@@ -37,12 +37,14 @@ export async function register(state, formData: FormData) {
                 image: '',
                 address: '',
                 dateOfBirth: '',
-                phoneNumber: ''
+                phoneNumber: '',
+                imageId:'',
+                gender:''
+
             }
         })
         await createSession(userCreated.id)
     } catch (error) {
-        console.log(error)
         await prisma.$disconnect()
         return {
             errors: 'Error While Creating Account',
@@ -78,8 +80,6 @@ export async function login(state, formData: FormData) {
         }
         await createSession(isExistingUser.id)
     } catch (errors) {
-        console.log(errors);
-
         return {
             errors: <string>errors
         }

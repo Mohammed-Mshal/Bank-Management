@@ -8,7 +8,7 @@ import SearchInput from "@/app/_Elements/SearchInput";
 export default function AsideDashboard() {
   return (
     <aside
-      className={`lg:sticky fixed top-0 h-screen group px-2 py-4 flex flex-1 transition-all duration-500 overflow-hidden`}
+      className={`lg:sticky fixed top-0 h-screen group px-2 py-4 flex transition-all duration-500 overflow-hidden`}
     >
       <div className="containerAside px-3 py-4 bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl flex-1 flex flex-col">
         <div
@@ -22,7 +22,7 @@ export default function AsideDashboard() {
           <ToggleMenu />
         </div>
         <div className="mt-8 block lg:hidden">
-          <SearchInput />
+          <SearchInput  id={'SearchAside'}/>
         </div>
         <ListOfItem />
         <form

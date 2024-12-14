@@ -21,7 +21,7 @@ export default async function Profile() {
       <Popover>
         <PopoverTrigger  className="flex items-center md:gap-2 gap-1">
             <Image
-              src={"/static/images/profileImage2.jpg"}
+              src={dataUser?.image||"/static/images/profileImage2.jpg"}
               height={40}
               width={40}
               alt="Profile"
