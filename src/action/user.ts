@@ -39,8 +39,8 @@ export async function register(state, formData: FormData) {
                 dateOfBirth: '',
                 phoneNumber: '',
                 imageId:'',
-                gender:''
-
+                gender:'',
+                residentialAddress:''
             }
         })
         await createSession(userCreated.id)
