@@ -53,7 +53,8 @@ export async function PATCH(req: NextRequest) {
 
             const bytes = await file.arrayBuffer()
             const bufferImageProfile = Buffer.from(bytes)
-            user?.imageId &&
+            console.log('ssss');
+            user?.imageId && user?.imageId.length > 0 &&
                 await imageKit.deleteFile(user?.imageId as string)
             const resultUploading = await imageKit.upload({
                 useUniqueFileName: false,
@@ -82,10 +83,10 @@ export async function PATCH(req: NextRequest) {
         const residentialAddress = <string>data.get('residentialAddress')
         const defaultImage: string | null = <string>data.get('image')
         if (defaultImage != null) {
-            user?.imageId &&
+            user?.imageId && user?.imageId.length > 0 &&
                 await imageKit.deleteFile(user?.imageId as string)
-            
         }
+
         imageUrl.length > 0 ?
             await prisma.customer.update({
                 where: {
@@ -114,6 +115,7 @@ export async function PATCH(req: NextRequest) {
                     residentialAddress,
                     firstName,
                     lastName,
+                    imageId: '',
                     image: 'https://ik.imagekit.io/alphaTeam/Bank_Management/default.jpg'
                 }
             }) : await prisma.customer.update({

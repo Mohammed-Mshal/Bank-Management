@@ -2,7 +2,6 @@ import { Account } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react"
-import checkEnvironment from "../libs/checkEnvironment";
 
 export function useAccount() {
     const [error, setError] = useState<null | string>(null)
@@ -43,19 +42,21 @@ export function useAccount() {
     const getAccounts = async (numberAccounts?) => {
         try {
             setLoading(true)
-            const res = await axios(`/api/accounts?${numberAccounts && `limit=${numberAccounts}`}`, {
+            const res = await fetch(`/api/accounts?${numberAccounts && `limit=${numberAccounts}`}`, {
                 method: 'get',
-                responseType: 'json',
-                baseURL: checkEnvironment(),
+                headers: {
+                    "Content-Type": 'application/json'
+                }
             })
-
+            const data = await res.json()
+            
             if (res.status === 400) {
-                setError(res.data.error)
+                setError(data.error)
                 setLoading(false)
             }
             setError(null)
             setLoading(false)
-            setAccounts(res.data.accountsUser)
+            setAccounts(data.accountsUser)
             router.refresh();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
