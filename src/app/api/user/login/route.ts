@@ -11,9 +11,8 @@ export async function POST(req: NextRequest) {
         const password: string | null = data?.password
 
         if (!email || !password) {
-            console.log('sss');
             return NextResponse.json({
-                error: 'Please Fill All Fields',
+                message: 'Please Fill All Fields',
             }, {
                 status: 400,
                 statusText: 'ERROR'
@@ -24,7 +23,7 @@ export async function POST(req: NextRequest) {
         })
         if (!isExistingUser) {
             return NextResponse.json({
-                error: 'Email Is Not Exist',
+                message: 'Email Is Not Exist',
             }, {
                 status: 401,
                 statusText: 'ERROR'
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest) {
         const isValidPassword = await compare(password, isExistingUser.password)
         if (!isValidPassword) {
             return NextResponse.json({
-                error: 'Password Is Not Valid',
+                message: 'Password Is Not Valid',
             }, {
                 status: 401,
                 statusText: 'ERROR'
@@ -53,7 +52,7 @@ export async function POST(req: NextRequest) {
     } catch (error: any) {
         await prisma.$disconnect()
         return NextResponse.json({
-            error: error.message as string,
+            message: error.message as string,
         }, {
             status: 500,
             statusText: 'FAIL'

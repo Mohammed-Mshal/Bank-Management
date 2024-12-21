@@ -4,7 +4,6 @@ import ListOfItem from "../../_Elements/ListOfItem";
 import { deleteSession } from "../../libs/session";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import "./Aside.css";
-import SearchInput from "@/app/_Elements/SearchInput";
 export default function AsideDashboard() {
   return (
     <aside
@@ -20,9 +19,6 @@ export default function AsideDashboard() {
             Golden Bank
           </h2>
           <ToggleMenu />
-        </div>
-        <div className="mt-8 block lg:hidden">
-          <SearchInput  id={'SearchAside'}/>
         </div>
         <ListOfItem />
         <form

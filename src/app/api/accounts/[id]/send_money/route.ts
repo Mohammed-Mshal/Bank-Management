@@ -112,7 +112,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     } catch (error: any) {
         await prisma.$disconnect()
         return NextResponse.json({
-            error: error.message as string
+            message: error.message as string
         }, {
             status: 400
         })

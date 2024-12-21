@@ -283,7 +283,7 @@ export default function FormSettings() {
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <DayPicker
-                captionLayout="dropdown-months"
+                captionLayout="dropdown"
                 mode="single"
                 required
                 pagedNavigation

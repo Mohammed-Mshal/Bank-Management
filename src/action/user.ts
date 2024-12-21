@@ -34,13 +34,13 @@ export async function register(state, formData: FormData) {
                 lastName,
                 email,
                 password: hashingPassword,
-                image: '',
+                image: 'https://ik.imagekit.io/alphaTeam/Bank_Management/default.jpg',
                 address: '',
                 dateOfBirth: '',
                 phoneNumber: '',
-                imageId:'',
-                gender:'',
-                residentialAddress:''
+                imageId: '',
+                gender: '',
+                residentialAddress: ''
             }
         })
         await createSession(userCreated.id)

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
-import { MdDashboard, MdManageAccounts } from "react-icons/md";
+import { MdDashboard, MdManageAccounts, MdNotifications } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 
 const listItemContent = [
@@ -20,6 +20,11 @@ const listItemContent = [
     titleLink: "Setting",
     link: "/dashboard/setting",
     icon: <FiSettings />,
+  },
+  {
+    titleLink: "Notifications",
+    link: "/dashboard/notifications",
+    icon: <MdNotifications />,
   },
 ];
 export default function ListOfItem() {

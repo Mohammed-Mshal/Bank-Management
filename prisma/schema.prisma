@@ -25,11 +25,11 @@ model User {
 }
 
 model Customer {
-  id                 String         @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String            @id @default(auto()) @map("_id") @db.ObjectId
   firstName          String
   lastName           String
   dateOfBirth        String
-  email              String         @unique
+  email              String            @unique
   password           String
   phoneNumber        String
   gender             String
@@ -37,11 +37,12 @@ model Customer {
   image              String
   imageId            String
   residentialAddress String
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
   Account            Account[]
   Loan               Loan[]
   Notification       Notification[]
+  FavoriteAccounts   FavoriteAccount[]
 }
 
 model Account {
@@ -109,6 +110,16 @@ model Notification {
   textMessage  String
   customerId   String   @db.ObjectId
   customer     Customer @relation(fields: [customerId], references: [id])
+}
+
+model FavoriteAccount {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  idAccount    String    @db.ObjectId
+  firstName    String
+  lastName     String
+  imageProfile String
+  Customer     Customer? @relation(fields: [customerId], references: [id])
+  customerId   String?   @db.ObjectId
 }
 
 enum AccountType {

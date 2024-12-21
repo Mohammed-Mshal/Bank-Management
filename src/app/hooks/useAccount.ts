@@ -40,6 +40,7 @@ export function useAccount() {
     }
     const getAccounts = async (numberAccounts?) => {
         try {
+            setAccounts(null)
             setLoading(true)
             const res = await fetch(`/api/accounts?${numberAccounts && `limit=${numberAccounts}`}`, {
                 method: 'get',
@@ -48,10 +49,11 @@ export function useAccount() {
                 }
             })
             const data = await res.json()
-            
-            if (res.status === 400) {
+
+            if (!res.ok) {
                 setError(data.error)
                 setLoading(false)
+                return
             }
             setError(null)
             setLoading(false)
