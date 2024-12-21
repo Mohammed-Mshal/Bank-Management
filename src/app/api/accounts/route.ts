@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
                 accountType: typeAccount,
                 accountUsingDescription: descriptionAccount,
                 password: hashingPassword,
-                balance: 0,
-                accountStatus: "PENDING",
+                balance: 50000,
+                accountStatus: "VERIFY",
                 customerId: userVerify.id
             }
         })
