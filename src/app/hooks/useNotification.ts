@@ -10,15 +10,13 @@ export const useNotification = () => {
     const getNotification = async (limit?: number | null, skip?: number | null) => {
         try {
             setIsLoading(true)
-            if (skip === 1) {
-                setListNotification([])
-            }
-            const res = await fetch(`/api/notifications?${limit && `limit=${limit}`}&${skip && `skip=${skip}`}`, {
+            setListNotification([])
+            const res = await fetch(`/api/notifications?${limit ? `limit=${limit}`:''}&${skip ? `skip=${skip}`:''}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                cache: 'no-cache'
+                
             })
             const resJson = await res.json()
             setIsLoading(false)
@@ -27,12 +25,12 @@ export const useNotification = () => {
                 return
             }
             setError(null)
-            setListNotification(pre => [...pre, ...resJson.data.notifications])
+            setListNotification(resJson.data.notifications)
             setTotalPages(resJson.data.totalPages)
             return resJson.data.notifications
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            setError(error.message)
+            // setError(error.message)
             setIsLoading(false)
         }
     }

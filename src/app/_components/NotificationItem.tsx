@@ -77,7 +77,7 @@ export default function NotificationItem({
           </span>
           <button
             type="button"
-            className="text-red-600 text-xl cursor-pointer opacity-0 group-hover:opacity-100 transition-all"
+            className="text-red-600 text-xl cursor-pointer lg:opacity-0 group-hover:opacity-100 transition-all"
             title="Remove Notification"
             onClick={() => {
               Swal.fire({

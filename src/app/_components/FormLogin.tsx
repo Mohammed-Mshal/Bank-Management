@@ -1,11 +1,11 @@
 "use client";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
 export default function FormLogin() {
   const { login, error, loading } = useLogin();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");  
+  const [password, setPassword] = useState("");
   return (
     <form className="flex flex-col gap-4 mb-4">
       <div className="containerInput w-full">
@@ -25,10 +25,10 @@ export default function FormLogin() {
           id="password"
           onChange={(e) => setPassword(e.currentTarget.value)}
           placeholder="Enter Your Password"
-          className="px-4 py-2 outline-none w-full rounded-lg text-white placeholder:text-gray-300 bg-transparent border border-1  border-gray-600"
+          className="px-4 py-2 outline-none w-full rounded-lg text-white placeholder:text-gray-300 bg-transparent border-1  border-gray-600"
         />
       </div>
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {error && <h2 className="text-red-500 text-center">{error}</h2>}
       <button
         disabled={loading}
         type="submit"

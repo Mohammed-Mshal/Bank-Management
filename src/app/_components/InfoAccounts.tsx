@@ -4,8 +4,8 @@ import CardInfoAccount from "../_Elements/CardInfoAccount";
 import FormCreateAccount from "./FormCreateAccount";
 import "swiper/css";
 import { useAccount } from "../hooks/useAccount";
-import Loading from "../dashboard/loading";
 import Link from "next/link";
+import LoadingData from "./loadingData";
 
 export default function InfoAccounts() {
   const { accounts, error, getAccounts, loading } = useAccount();
@@ -27,7 +27,7 @@ export default function InfoAccounts() {
         </div>
       </div>
       {loading ? (
-        <Loading />
+        <LoadingData />
       ) : accounts && accounts?.length > 0 ? (
         <div className="flex flex-wrap justify-center w-full max-h-full gap-y-6 gap-x-4 mb-4">
           {accounts?.map((info) => {

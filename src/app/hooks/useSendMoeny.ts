@@ -1,14 +1,17 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import toast from "react-hot-toast"
 
 export const useSendMoney = () => {
     const [error, setError] = useState<null | string>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [successful, setSuccessful] = useState<null | string>(null)
     const router = useRouter()
-    const sendMoney = async (idAccount, idReceiverAccount, password, totalMoney, descriptionTransfer) => {
+    const sendMoney = async (idAccount?, idReceiverAccount?, password?, totalMoney?, descriptionTransfer?) => {
         try {
+            setError(null)
             setIsLoading(true)
+            setSuccessful(null)
             const res = await fetch(`/api/accounts/${idAccount}/send_money?ReceiverAccount=${idReceiverAccount}`, {
                 method: 'PATCH',
                 headers: {
@@ -25,15 +28,17 @@ export const useSendMoney = () => {
             if (!res.ok) {
                 setError(data.message)
                 setSuccessful(null)
+                toast.error(data.message);
                 return;
             }
-            setError(null)
             setSuccessful(data.message)
+            toast.success(data.message);
             router.refresh()
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setIsLoading(false)
-            setError(error.message)
+            setSuccessful(null)
+            // setError(error.message)
         }
     }
 

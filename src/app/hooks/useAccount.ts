@@ -35,7 +35,8 @@ export function useAccount() {
             router.refresh();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            setError(error.message)
+            setLoading(false)
+            // setError(error.message)
         }
     }
     const getAccounts = async (numberAccounts?) => {
@@ -62,7 +63,7 @@ export function useAccount() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setLoading(false)
-            setError(error.message)
+            // setError(error.message)
         }
     }
     return { createAccount, getAccounts, error, loading, accounts }

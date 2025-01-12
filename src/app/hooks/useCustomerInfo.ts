@@ -51,7 +51,7 @@ export function useCustomerInfo() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setIsLoading(false)
-            setError(error.message)
+            // setError(error.message)
         }
     }
     return { userInfo, isLoading, error, getInfoCustomer }

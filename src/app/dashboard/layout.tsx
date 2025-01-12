@@ -12,13 +12,15 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ 
   return (
     <div className=" min-h-screen bg-black flex">
-      <AsideDashboard />
-      <div className="flex-1 px-2 py-4 main_content">
-        <SecondNavbar />
-        {children}
-      </div>
+        <AsideDashboard />
+        <div className="flex-1 px-2 py-4 main_content">
+          <SecondNavbar />
+          {children}
+        </div>
+
     </div>
   );
 }

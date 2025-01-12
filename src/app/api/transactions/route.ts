@@ -34,11 +34,13 @@ export async function GET(req: NextRequest) {
         }
         prisma.$connect()
         const idAccount = req.nextUrl.searchParams.get('idAccount')
+        const sorted = req.nextUrl.searchParams.get('sorted')||'desc'
+        const sortedBy = req.nextUrl.searchParams.get('sortedBy')||'date'
         const limit = req.nextUrl.searchParams.get('limit') || 20
-        const page = req.nextUrl.searchParams.get('page') || 1
+        const page = req.nextUrl.searchParams.get('skip') || 1
         const skip = (+page - 1) * +limit
-        const startDate = req.nextUrl.searchParams.get('startDate') ? new Date(req.nextUrl.searchParams.get('startDate') as string) : new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))
-        const endDate = req.nextUrl.searchParams.get('endDate') ? new Date(req.nextUrl.searchParams.get('endDate') as string) : new Date(Date.now())
+        const startDate = req.nextUrl.searchParams.get('startDate') ? new Date(req.nextUrl.searchParams.get('startDate')as string)  : new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))
+        const endDate = req.nextUrl.searchParams.get('endDate') ? new Date(new Date(req.nextUrl.searchParams.get('endDate')as string).setUTCHours(23,59,59))  : new Date(Date.now())
         if (idAccount) {
             if (!isMongoId(idAccount)) {
                 return NextResponse.json({
@@ -48,6 +50,42 @@ export async function GET(req: NextRequest) {
                     statusText: 'ERROR'
                 })
             }
+            const isUserOwnerAccount=await prisma.account.findUnique({
+                where:{
+                    id:idAccount,
+                    customerId:userId as string
+                },
+                select:{
+                    id:true
+                }
+            })
+            
+            if (!isUserOwnerAccount) {
+                return NextResponse.json({
+                    message: 'Unauthorize'
+                }, {
+                    status: 401,
+                    statusText: 'ERROR'
+                })
+            }
+            const totalTransactions = await prisma.transaction.findMany({
+                where: {
+                    OR: [
+                        {
+                            accountId: idAccount,
+                        },
+                        {
+                            idReceiverAccount: idAccount
+                        }],
+                    transactionDate: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                select: {
+                    id: true
+                }
+            })
             const transactionsAccount = await prisma.transaction.findMany({
                 skip,
                 take: +limit,
@@ -63,11 +101,14 @@ export async function GET(req: NextRequest) {
                         gte: startDate,
                         lte: endDate
                     }
-                }
+                },
+                orderBy: sortedBy==='amount'?{amount: sorted=='desc'?'desc':'asc'}:{ transactionDate: sorted=='desc'?'desc':'asc' },
             })
-
+            prisma.$disconnect()
             return NextResponse.json({
                 data: {
+                    totalTransactions:
+                    totalTransactions.length/+limit,
                     transactions: transactionsAccount
                 }
             }, {
@@ -75,7 +116,27 @@ export async function GET(req: NextRequest) {
                 statusText: 'SUCCESS'
             })
         }
-
+        const totalTransactions = await prisma.transaction.findMany({
+            where: {
+                OR: [
+                    {
+                        account: {
+                            customerId: userId
+                        },
+                        idReceiverCustomer: userId,
+                    },
+                    {
+                        idReceiverAccount: idAccount
+                    }],
+                transactionDate: {
+                    gte: startDate,
+                    lte: endDate
+                }
+            },
+            select: {
+                id: true
+            }
+        })
         const transactionsUser = await prisma.transaction.findMany({
             skip,
             take: +limit,
@@ -94,11 +155,13 @@ export async function GET(req: NextRequest) {
                     gte: startDate,
                     lte: endDate
                 }
-            }
+            },
+            orderBy: sortedBy==='amount'?{amount: sorted=='desc'?'desc':'asc'}:{ transactionDate: sorted=='desc'?'desc':'asc' },
         })
         prisma.$disconnect()
         return NextResponse.json({
             data: {
+                totalTransactions:totalTransactions.length/+limit,
                 transactions: transactionsUser
             }
         }, {

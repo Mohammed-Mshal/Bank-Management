@@ -19,7 +19,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useSendMoney } from "../hooks/useSendMoeny";
-import toast from "react-hot-toast";
 
 export default function FormSendMoney({
   idReceiverAccount,
@@ -30,14 +29,25 @@ export default function FormSendMoney({
   const [totalMoney, setTotalMoney] = useState<null | number>(null);
   const [descriptionTransfer, setDescriptionTransfer] = useState<string>("");
   const [idAccount, setIdAccount] = useState<null | string>(null);
-  const { error, isLoading, sendMoney, successful } = useSendMoney();
+  const { isLoading, sendMoney, successful } = useSendMoney();
   const { accounts, getAccounts } = useAccount();
   const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     getAccounts();
   }, []);
+  useEffect(() => {
+    setAccountPassword(null)
+    setTotalMoney(null)
+    setDescriptionTransfer('')
+    setIdAccount(null)
+  }, [openDialog]);
+  useEffect(() => {
+    if (successful) {
+      setOpenDialog(false);
+    }
+  }, [successful]);
   return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog} >
       <DialogTrigger className="cardInfo border border-indigo-600 hover:border-indigo-800 hover:bg-indigo-900 transition-all py-1 flex-1 flex justify-center items-center rounded-lg">
         Send Money
       </DialogTrigger>
@@ -57,13 +67,8 @@ export default function FormSendMoney({
               totalMoney,
               descriptionTransfer
             );
-            setOpenDialog(false);
-            if (successful) {
-              toast.success(successful);
-              await getAccounts()
-            } else {
-              toast.error(error);
-            }
+            await getAccounts()
+
           }}
         >
           <div className="containerSelect flex-1 w-full flex flex-col">
@@ -97,7 +102,7 @@ export default function FormSendMoney({
               Password Of Transaction
             </label>
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               onChange={(e) => setAccountPassword(e.currentTarget.value)}

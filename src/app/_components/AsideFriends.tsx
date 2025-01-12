@@ -1,36 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import TitleSection from "../_Elements/TitleSection";
 import Image from "next/image";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FavoriteAccount } from "@prisma/client";
 import LoadingData from "./loadingData";
 import FormSendMoney from "./FormSendMoney";
+import { useFavoriteAccounts } from "../hooks/useFavoriteAccounts";
 
-export default function AsideFriends() {
-  const [favoriteAccounts, setFavoriteAccounts] = useState<FavoriteAccount[]>(
-    []
-  );
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
-  const [error, setError] = useState<boolean | null>(null);
-  useEffect(() => {
-    const getFavoriteAccount = async () => {
-      setIsLoading(true);
-      const res = await fetch("/api/accounts/favoriteAccounts", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setIsLoading(false);
-      if (!res.ok) {
-        setError(data.message);
-        return;
-      }
-      setFavoriteAccounts(data.data);
-    };
+  export default function AsideFriends() {
+    const {error,favoriteAccounts,getFavoriteAccount,isLoading}=useFavoriteAccounts()
+  useEffect(() => { 
     getFavoriteAccount();
   }, []);
   return (

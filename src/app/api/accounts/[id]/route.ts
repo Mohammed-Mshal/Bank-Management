@@ -15,22 +15,53 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         }
         const idAccount = (await params).id
         const userId = session.userId;
+         if (!isMongoId(idAccount)) {
+            return NextResponse.json({
+                message:'Id Account Not Valid'
+            },{
+                status:400,
+                statusText:'FAIL'
+            })
+        }
         const accountInfo = await prisma.account.findUnique({
             where: {
-                id: idAccount
+                id: idAccount,
+            },
+            select: {
+                customerId: true,
+                id: true,
+                accountStatus: true,
+                accountType: true,
+                accountUsingDescription: true,
+                balance: true,
+                createdAt: true,
+                updatedAt: true,
+                customer: {
+                    select: {
+                        image: true,
+                        firstName:true,
+                        lastName:true,
+                    }
+                }
             }
         })
         await prisma.$disconnect()
         if (accountInfo?.customerId === userId) {
             return NextResponse.json({
-                accountInfo: {
-                    id: accountInfo?.id,
-                    accountStatus: accountInfo?.accountStatus,
-                    accountType: accountInfo?.accountType,
-                    accountUsingDescription: accountInfo?.accountUsingDescription,
-                    balance: accountInfo?.balance,
-                    createdAt: accountInfo?.createdAt,
-                    updatedAt: accountInfo?.updatedAt,
+                data: {
+                    accountInfo: {
+                        id: accountInfo?.id,
+                        accountStatus: accountInfo?.accountStatus,
+                        accountType: accountInfo?.accountType,
+                        accountUsingDescription: accountInfo?.accountUsingDescription,
+                        balance: accountInfo?.balance,
+                        createdAt: accountInfo?.createdAt,
+                        updatedAt: accountInfo?.updatedAt,
+                        customerId: accountInfo?.customerId,
+                        firstName: accountInfo?.customer?.firstName,
+                        lastName: accountInfo?.customer?.lastName,
+                        customerImage: accountInfo?.customer.image
+                    }
                 }
             }, {
                 status: 200
@@ -38,11 +69,16 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         }
         else {
             return NextResponse.json({
-                accountInfo: {
-                    id: accountInfo?.id,
-                    accountStatus: accountInfo?.accountStatus,
-                    accountType: accountInfo?.accountType,
-                    customerId: accountInfo?.customerId
+                data: {
+                    accountInfo: {
+                        id: accountInfo?.id,
+                        accountStatus: accountInfo?.accountStatus,
+                        accountType: accountInfo?.accountType,
+                        customerId: accountInfo?.customerId,
+                        firstName: accountInfo?.customer?.firstName,
+                        lastName: accountInfo?.customer?.lastName,
+                        customerImage: accountInfo?.customer.image
+                    }
                 }
             }, {
                 status: 200
@@ -53,7 +89,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         await prisma.$disconnect()
 
         return NextResponse.json({
-            error: error?.message
+            message: error?.message
         }, {
             status: 400
         })

@@ -19,21 +19,21 @@ export default async function Profile() {
   return (
     <div className="relative">
       <Popover>
-        <PopoverTrigger  className="flex items-center md:gap-2 gap-1">
-            <Image
-              src={dataUser?.image||"/static/images/profileImage2.jpg"}
-              height={40}
-              width={40}
-              alt="Profile"
-              className="rounded-full h-8 w-8 md:h-10 md:w-10 object-cover"
-            />
-            <SlArrowDown className="text-white text-sm" />
+        <PopoverTrigger className="flex items-center md:gap-2 gap-1">
+          <Image
+            src={dataUser?.image || "/static/images/profileImage2.jpg"}
+            height={40}
+            width={40}
+            alt="Profile"
+            className="rounded-full h-8 w-8 md:h-10 md:w-10 object-cover"
+          />
+          <SlArrowDown className="text-white text-sm" />
         </PopoverTrigger>
         <PopoverContent className="p-0 rounded-xl overflow-hidden" align="end">
           <div className="text-center px-4 py-2">{dataUser?.email}</div>
           <div>
             <Link
-              href={"/profile"}
+              href={"/dashboard/profile"}
               className="flex items-center gap-2 px-4 py-2 text-white hover:bg-indigo-700 transition-all duration-500"
             >
               <CgProfile />
@@ -42,7 +42,7 @@ export default async function Profile() {
           </div>
           <div>
             <Link
-              href={"#"}
+              href={"/dashboard/setting"}
               className="flex items-center gap-2 px-4 py-2 text-white hover:bg-indigo-700 transition-all duration-500"
             >
               <CiSettings />

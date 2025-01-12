@@ -1,24 +1,28 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 
-export function useLogin() {
+export function useSignup() {
     const [error, setError] = useState<null | string>(null)
     const [loading, setLoading] = useState(false)
     const route = useRouter()
-    const login = async (email: string, password: string) => {
-        setError(null)
+    const signup = async (firstName?: string | null, lastName?: string | null, email?: string | null, password?: string | null) => {
         try {
-            if (!email || !password) {
+            if (!firstName || !lastName || !email || !password) {
                 setError('Please Fill All Fields')
             }
+            console.log(firstName,lastName,email,password);
+            
             setLoading(true)
-            const data = await fetch(`/api/user/login`, {
+            setError(null)
+            const data = await fetch(`/api/user/register`, {
                 method: 'POST',
                 headers: {
                 },
                 body: JSON.stringify({
-                    email: email,
-                    password: password
+                    firstName,
+                    lastName,
+                    email,
+                    password
                 })
             })
             const resData = await data.json()
@@ -33,10 +37,10 @@ export function useLogin() {
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            // setError(error.message)
             setLoading(false);
+            setError(error.message);
 
         }
     }
-    return { login, error, loading }
+    return { signup, error, loading }
 }
