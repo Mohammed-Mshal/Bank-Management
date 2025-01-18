@@ -2,7 +2,7 @@
 import LoadingData from "@/app/_components/loadingData";
 import NotificationItem from "@/app/_components/NotificationItem";
 import { useNotification } from "@/app/hooks/useNotification";
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { cn } from "@/lib/utils"
@@ -30,6 +30,9 @@ export default function Notifications() {
   };
   const { isLoading, error, listNotification, getNotification, totalPages } =
     useNotification();
+  useEffect(() => {
+    getNotification(10, currentPage, null, sortedDataAs, null, null)
+  }, [])
   return (
     <div className="notification">
       <div className="filtering bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl border my-4 p-4 gap-8 flex flex-col xl:flex-row xl:items-baseline items-stretch flex-wrap justify-between">
@@ -45,7 +48,7 @@ export default function Notifications() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                  name="Pick A Date"
+                    name="Pick A Date"
                     id="date"
                     variant={"outline"}
 
@@ -116,7 +119,7 @@ export default function Notifications() {
 
       <div className="wrapper-notifications mx-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl py-8 px-4 lg:px-8 my-6 shadow-[rgba(255,255,255,.1)] shadow-lg">
         <div className="container-notifications flex flex-col items-center gap-8">
-          {listNotification.map((notification, index) => {
+          {listNotification.length === 0 ? <h2>You Don`t Have Notifications</h2> : listNotification.map((notification, index) => {
             return (
               <NotificationItem
                 key={notification.id}
@@ -138,7 +141,7 @@ export default function Notifications() {
         <div className="flex justify-center flex-wrap gap-8">
           {currentPage - 1 > 0 && (
             <button
-            name="Previews"
+              name="Previews"
               className="flex items-center justify-center gap-2 bg-black bg-opacity-70  rounded-lg py-3 px-4 transition-all duration-500 hover:bg-black hover:bg-opacity-40 w-40"
               onClick={() => {
                 setCurrentPage((pre) => pre - 1);

@@ -4,7 +4,7 @@ import AsideDashboard from "../_components/Aside/AsideDashboard";
 import SecondNavbar from "../_components/SecondNavbar";
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "Dashboard Of Your account",
+  description: "Dashboard Of User",
 };
 
 export default function DashboardLayout({
@@ -20,7 +20,6 @@ export default function DashboardLayout({
           <SecondNavbar />
           {children}
         </div>
-
     </div>
   );
 }
