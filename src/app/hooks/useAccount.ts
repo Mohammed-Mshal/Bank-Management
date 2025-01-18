@@ -1,14 +1,12 @@
-import { Account } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { useState } from "react"
+import toast from "react-hot-toast";
+import { useStore } from "./useStore";
 
 export function useAccount() {
     const [error, setError] = useState<null | string>(null)
     const [loading, setLoading] = useState(false)
-    const [accounts, setAccounts] = useState<[Account] | null>(null)
-
-    const router = useRouter();
-
+    // const [accounts, setAccounts] = useState<[Account] | null>(null)
+    const {setAccounts}=useStore()
     const createAccount = async (accountType, accountPassword, accountDescription) => {
         try {
             if (!accountType || !accountPassword || !accountDescription) {
@@ -32,7 +30,11 @@ export function useAccount() {
             }
             setError(null)
             setLoading(false)
-            router.refresh();
+            toast.success(resData.message,{
+                position:'top-center',
+                duration:4000
+            })
+            await getAccounts()
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setLoading(false)
@@ -41,10 +43,10 @@ export function useAccount() {
     }
     const getAccounts = async (numberAccounts?) => {
         try {
-            setAccounts(null)
+            setAccounts([])
             setLoading(true)
-            const res = await fetch(`/api/accounts?${numberAccounts && `limit=${numberAccounts}`}`, {
-                method: 'get',
+            const res = await fetch(`/api/accounts?${numberAccounts ?`limit=${numberAccounts}`:''}`, {
+                method: 'GET',
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -59,12 +61,11 @@ export function useAccount() {
             setError(null)
             setLoading(false)
             setAccounts(data.accountsUser)
-            router.refresh();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setLoading(false)
             // setError(error.message)
         }
     }
-    return { createAccount, getAccounts, error, loading, accounts }
+    return { createAccount, getAccounts, error, loading }
 }

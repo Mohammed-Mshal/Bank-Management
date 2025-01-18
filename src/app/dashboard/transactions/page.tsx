@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Swal from 'sweetalert2';
 
 export default function Transactions() {
 
@@ -30,9 +31,55 @@ export default function Transactions() {
     from: new Date(new Date(Date.now()).toDateString()),
     to: new Date(new Date(Date.now()).toDateString()),
   })
+  const handleDeleteTransaction = async (id: string) => {
+    try {
+      const res = await fetch(`/api/transactions/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        Swal.fire({
+          icon: "error",
+          text: json.message as string,
+          customClass: {
+            container: "bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl",
+            popup: "bg-[#1A1A1A] rounded-2xl text-white",
+            confirmButton: "bg-indigo-800",
+            htmlContainer: 'text-white'
+          },
+        });
+        return;
+      }
+      Swal.fire({
+        icon: "success",
+        text: json.message as string,
+        customClass: {
+          container: "bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl",
+          popup: "bg-[#1A1A1A] rounded-2xl text-white",
+          confirmButton: "bg-indigo-800",
+          htmlContainer: 'text-white'
+        },
+      });
+      getTransactions(10, currentPage, null, sortedDataAs, sortedDataBy, date.from?.toString(), date.to?.toString())
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        text: error.message as string,
+        customClass: {
+          container: "bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl",
+          popup: "bg-[#1A1A1A] rounded-2xl",
+          confirmButton: "bg-indigo-800",
+        },
+      });
+    }
+  };
   const { isLoading, error, getTransactions, listTransactions, totalPages } = useTransactions()
   useEffect(() => {
-    getTransactions(10, currentPage, null, sortedDataAs, sortedDataBy, date.from?.toString(), date.to?.toString())
+    getTransactions(10, currentPage, null, sortedDataAs, sortedDataBy, null, null)
   }, [])
   return (
     <div className="transactions">
@@ -49,6 +96,7 @@ export default function Transactions() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
+                  name='Pick A Date'
                     id="date"
                     variant={"outline"}
 
@@ -122,7 +170,8 @@ export default function Transactions() {
               </SelectContent>
             </Select>
           </div>
-          <Button className='flex items-center justify-center gap-2 bg-indigo-600  rounded-lg py-3 px-4 transition-all duration-500 hover:bg-indigo-800 text-white max-w-32 w-full mx-auto sm:mx-0'
+          <Button 
+                  name='Filter' className='flex items-center justify-center gap-2 bg-indigo-600  rounded-lg py-3 px-4 transition-all duration-500 hover:bg-indigo-800 text-white max-w-32 w-full mx-auto sm:mx-0'
             onClick={() => {
               getTransactions(10, currentPage, null, sortedDataAs, sortedDataBy, date.from?.toString(), date.to?.toString())
             }}>
@@ -147,14 +196,36 @@ export default function Transactions() {
                 </Thead>
                 <Tbody>
                   {listTransactions.map((transaction: Transaction) => (
-                    <Tr key={transaction.id}>
+                    <Tr key={transaction?.id}>
                       <Td className="p-4">{transaction?.accountId}</Td>
                       <Td className="p-4">{transaction?.idReceiverAccount}</Td>
                       <Td className="p-4">{transaction?.amount}</Td>
                       <Td className="p-4">{transaction?.description}</Td>
                       <Td className="p-4">{(new Date(transaction?.transactionDate)).toDateString()}</Td>
                       <Td className="p-4">
-                        <Button className='bg-red-600 hover:bg-red-700 text-white'>Delete</Button>
+                        <Button 
+                  name='Delete' className='bg-red-600 hover:bg-red-700 text-white'
+                          onClick={() => {
+                            Swal.fire({
+                              title: "Do you want to Delete This Transaction?",
+                              showCancelButton: true,
+                              confirmButtonText: "Delete",
+                              customClass: {
+                                container:
+                                  "bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl",
+                                popup: "bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl",
+                                title: "text-white",
+                                confirmButton: "bg-red-500 hover:bg-red-800 transition-all",
+                                cancelButton: "bg-gray-500 hover:bg-gray-600 transition-all",
+                              },
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                handleDeleteTransaction(transaction?.id);
+                              }
+                            });
+                          }}>
+                          Delete
+                        </Button>
                       </Td>
                     </Tr>
                   ))}
@@ -166,7 +237,8 @@ export default function Transactions() {
       </div>
       <div className="flex justify-center gap-8">
         {currentPage - 1 > 0 && (
-          <button
+          <button 
+                  name='Previews'
             className="flex items-center justify-center gap-2 bg-white bg-opacity-50  rounded-lg py-3 px-4 transition-all duration-500 hover:bg-white hover:bg-opacity-20 w-40"
             onClick={() => {
               setCurrentPage((pre) => pre - 1);
@@ -177,7 +249,8 @@ export default function Transactions() {
           </button>
         )}
         {totalPages > currentPage && (
-          <button
+          <button 
+                  name='Next'
             className="flex items-center justify-center gap-2 bg-indigo-600  rounded-lg py-3 px-4 transition-all duration-500 hover:bg-indigo-800 w-40"
             onClick={() => {
               setCurrentPage((pre) => pre + 1);

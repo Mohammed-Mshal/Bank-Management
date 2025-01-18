@@ -16,7 +16,7 @@ export async function PATCH(req: NextRequest) {
                 statusText: 'ERROR'
             })
         }
-        const userId = session.userId
+        const userId = session.userId as string
         if (!userId) {
             return NextResponse.json({
                 message: 'Unauthorized'
@@ -79,7 +79,7 @@ export async function PATCH(req: NextRequest) {
         })
         await prisma.$disconnect()
         return NextResponse.json({
-            data: 'Password Changed is Successful'
+            message: 'Password Changed is Successful'
         }, {
             status: 200,
             statusText: 'SUCCESSFUL'
@@ -88,7 +88,7 @@ export async function PATCH(req: NextRequest) {
     } catch (error: any) {
         await prisma.$disconnect()
         return NextResponse.json({
-            error: error.message as string
+            message: error.message as string
         }, {
             status: 500,
             statusText: 'FAIL'

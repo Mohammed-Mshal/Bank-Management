@@ -16,6 +16,7 @@ export default function NotFound() {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <button
+            name="Go Back"
             onClick={() => {
               route.back();
             }}

@@ -18,7 +18,8 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
                 statusText: 'FAIL'
             })
         }
-        if (!isMongoId(session.userId)) {
+        const userId=session.userId as string
+        if (!isMongoId(userId)) {
             return NextResponse.json({
                 data: null,
                 message: 'Id Not Valid'

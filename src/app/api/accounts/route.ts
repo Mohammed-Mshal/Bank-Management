@@ -37,12 +37,12 @@ export async function POST(req: NextRequest) {
         })
         prisma.$disconnect()
 
-        return NextResponse.json({ data: null }, { status: 200, statusText: 'Account is Created' })
+        return NextResponse.json({ message:"Account Is Created" }, { status: 200, statusText: 'Account is Created' })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         prisma.$disconnect()
 
-        return NextResponse.json({ error: error?.message }, { status: 400, })
+        return NextResponse.json({ message: error?.message }, { status: 400, })
     }
 }
 export async function GET(req: NextRequest) {

@@ -67,6 +67,7 @@ export default function SignupForm() {
       </div>
       {error && <p className="text-red-400 text-center">{error}</p>}
       <button
+        name="Create Account"
         disabled={loading}
         type="submit"
         onClick={async (e) => {

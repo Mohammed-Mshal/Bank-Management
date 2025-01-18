@@ -18,10 +18,10 @@ export default function Notification() {
         isOpen &&
           listNotification &&
           listNotification.length === 0 &&
-          (await getNotification(3, 1));
+          (await getNotification(3, 1, null, 'disc', null, null));
       }}
     >
-      <PopoverTrigger>
+      <PopoverTrigger name="Notifications">
         <RiNotificationFill className="text-white -z-10 btnNotification text-lg bg-white bg-opacity-5 backdrop-blur-lg rounded-full md:w-10 w-8  md:h-10 h-8  md:p-3 p-2 cursor-pointer " />
       </PopoverTrigger>
       <PopoverContent align="end" className="rounded-xl overflow-hidden">
@@ -34,10 +34,9 @@ export default function Notification() {
             return (
               <div
                 key={notification.id}
-                className={`${
-                  listNotification?.length - 1 !== index &&
+                className={`${listNotification?.length - 1 !== index &&
                   "border-b border-gray-500"
-                } py-2 `}
+                  } py-2 `}
               >
                 <div className="flex flex-col max-w-full px-3 group transition-all cursor-pointer relative">
                   <span className="text-indigo-300 text-lg group-hover:text-indigo-500 transition-all">
@@ -63,15 +62,15 @@ export default function Notification() {
         {isLoading
           ? null
           : listNotification?.length > 0 && (
-              <div className="">
-                <Link
-                  href={"/notification"}
-                  className="text-center text-white text-opacity-60 hover:text-opacity-100 flex flex-col max-w-full px-3 group transition-all cursor-pointer"
-                >
-                  See All Notification
-                </Link>
-              </div>
-            )}
+            <div className="">
+              <Link
+                href={"/dashboard/notification"}
+                className="text-center text-white text-opacity-60 hover:text-opacity-100 flex flex-col max-w-full px-3 group transition-all cursor-pointer"
+              >
+                See All Notification
+              </Link>
+            </div>
+          )}
       </PopoverContent>
     </Popover>
   );

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import toast from "react-hot-toast";
+import FormResetPassword from "./FormResetPasswordUser";
 
 export default function FormSettings() {
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo | null>(null);
@@ -118,6 +119,7 @@ export default function FormSettings() {
             }}
           />
           <button
+          name="Remove Image Profile"
             className="bg-red-700  hover:bg-red-900 transition-all cursor-pointer px-4 lg:py-4 py-2 rounded-lg"
             type="button"
             onClick={() => {
@@ -267,6 +269,7 @@ export default function FormSettings() {
           <Popover>
             <PopoverTrigger asChild>
               <Button
+              name="Pick A Date"
                 variant={"outline"}
                 className={cn(
                   "w-[240px] pl-3 text-left font-normal",
@@ -324,6 +327,7 @@ export default function FormSettings() {
           ></textarea>
         </div>
         <button
+          name="Save Change"
           type="submit"
           onClick={async (e) => {
             e.preventDefault();
@@ -333,6 +337,7 @@ export default function FormSettings() {
         >
           Save Changes
         </button>
+        <FormResetPassword />
       </div>
     </form>
   );

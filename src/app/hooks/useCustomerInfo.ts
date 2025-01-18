@@ -42,7 +42,6 @@ export function useCustomerInfo() {
                 setUserInfo({ ...data.userInfo, dateOfBirth: data.userInfo.dateOfBirth as Date })
                 setError(null)
                 setIsLoading(false)
-                console.log(data);
             }
             else {
                 setIsLoading(false);

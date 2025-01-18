@@ -58,6 +58,7 @@ export default async function Profile() {
               className="w-full"
             >
               <button
+              name="Sign Out"
                 type="submit"
                 className="flex items-center gap-2 px-4 py-2 text-white hover:bg-red-600  w-full transition-all duration-500"
               >

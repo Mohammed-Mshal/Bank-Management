@@ -6,9 +6,12 @@ import "swiper/css";
 import { useAccount } from "../hooks/useAccount";
 import Link from "next/link";
 import LoadingData from "./loadingData";
+import { useStore } from "../hooks/useStore";
 
 export default function InfoAccounts() {
-  const { accounts, error, getAccounts, loading } = useAccount();
+  const { error, getAccounts, loading } = useAccount();
+
+  const { accounts } = useStore()
   useEffect(() => {
     getAccounts(3);
   }, []);
@@ -26,7 +29,7 @@ export default function InfoAccounts() {
           <FormCreateAccount />
         </div>
       </div>
-      {loading ? (
+      {loading || accounts?.length === 0 ? (
         <LoadingData />
       ) : accounts && accounts?.length > 0 ? (
         <div className="flex flex-wrap justify-center w-full max-h-full gap-y-6 gap-x-4 mb-4">

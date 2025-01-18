@@ -96,7 +96,8 @@ export default function ContactUs() {
               text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none resize-none h-40"
               ></textarea>
             </div>
-            <button className="text-lg w-32 py-2 bg-[var(--normal-violet)] text-white rounded-xl transition-all hover:shadow-md hover:shadow-violet-300 duration-500">
+            <button 
+                  name='Submit' className="text-lg w-32 py-2 bg-[var(--normal-violet)] text-white rounded-xl transition-all hover:shadow-md hover:shadow-violet-300 duration-500">
               Submit
             </button>
           </motion.form>

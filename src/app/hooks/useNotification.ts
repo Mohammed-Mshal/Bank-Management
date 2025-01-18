@@ -7,16 +7,16 @@ export const useNotification = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [listNotification, setListNotification] = useState<Notification[]>([])
     const [totalPages, setTotalPages] = useState<number>(0)
-    const getNotification = async (limit?: number | null, skip?: number | null) => {
+    const getNotification = async (limit: number | null=null, skip: number | null=null,idAccount:string|null=null,sortedAs:string|null='desc',startDate:string | unknown,endDate:string | unknown) => {
         try {
             setIsLoading(true)
             setListNotification([])
-            const res = await fetch(`/api/notifications?${limit ? `limit=${limit}`:''}&${skip ? `skip=${skip}`:''}`, {
+            const res = await fetch(`/api/notifications?${startDate?`startDate=${startDate}&`:''}${endDate?`endDate=${endDate}&`:''}${idAccount?`idAccount=${idAccount}&`:''}${limit? `limit=${limit}&`:''}${skip? `skip=${skip}&`:''}${sortedAs? `sorted=${sortedAs}`:''}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                
+                cache:'default'
             })
             const resJson = await res.json()
             setIsLoading(false)

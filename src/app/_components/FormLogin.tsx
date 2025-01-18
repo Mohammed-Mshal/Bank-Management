@@ -30,6 +30,7 @@ export default function FormLogin() {
       </div>
       {error && <h2 className="text-red-500 text-center">{error}</h2>}
       <button
+      name="Login"
         disabled={loading}
         type="submit"
         onClick={async (e) => {

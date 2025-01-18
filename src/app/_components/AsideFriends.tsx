@@ -8,9 +8,9 @@ import LoadingData from "./loadingData";
 import FormSendMoney from "./FormSendMoney";
 import { useFavoriteAccounts } from "../hooks/useFavoriteAccounts";
 
-  export default function AsideFriends() {
-    const {error,favoriteAccounts,getFavoriteAccount,isLoading}=useFavoriteAccounts()
-  useEffect(() => { 
+export default function AsideFriends() {
+  const { error, favoriteAccounts, getFavoriteAccount, isLoading } = useFavoriteAccounts()
+  useEffect(() => {
     getFavoriteAccount();
   }, []);
   return (
@@ -52,12 +52,11 @@ import { useFavoriteAccounts } from "../hooks/useFavoriteAccounts";
             );
           })}
         </ul>
-      ) : (
+      ) : error ? <h5 className="px-4 text-center text-gray-400">{error}</h5> : (
         <h5 className="px-4 text-center text-gray-400">
           You Don`t Have Any Favorite Account
         </h5>
       )}
-      {error && <h5 className="px-4 text-center text-gray-400">{error}</h5>}
     </ScrollArea>
   );
 }

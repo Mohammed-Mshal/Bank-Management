@@ -19,6 +19,7 @@ export default function ToggleMenu() {
         }`}
     >
       <button
+        name="Toggle Aside"
         onClick={() => {
           asideStatusCollapse ? unCollapseAside() : collapseAside();
         }}

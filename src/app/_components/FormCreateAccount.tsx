@@ -26,11 +26,11 @@ export default function FormCreateAccount() {
   const [accountDescription, setAccountDescription] = useState<null | string>(
     null
   );
-  const { createAccount, error, loading } = useAccount();
+  const { createAccount, error, loading,getAccounts } = useAccount();
   const [openDialog, setOpenDialog] = useState(false);
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTrigger className="cardInfo ">
+      <DialogTrigger className="cardInfo" name="Create Account">
         <BsPlusCircle className="hover:scale-110 hover:text-indigo-600 transition-all text-3xl" />
       </DialogTrigger>
       <DialogContent className="max-w-[400px] w-[calc(100vw-40px)] rounded-xl">
@@ -49,6 +49,7 @@ export default function FormCreateAccount() {
             );
             if (!error) {
               setOpenDialog(false);
+              await getAccounts()
             }
           }}
         >
@@ -59,8 +60,6 @@ export default function FormCreateAccount() {
             <Select
               name="accountType"
               onValueChange={(value) => {
-                console.log(value);
-
                 setAccountType(value);
               }}
             >
@@ -100,6 +99,7 @@ export default function FormCreateAccount() {
           </div>
           {error && <p className="text-red-500 text-center w-full">{error}</p>}
           <button
+          name="Create Account"
             disabled={loading}
             type="submit"
             className={` ${

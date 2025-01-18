@@ -67,7 +67,8 @@ export default function TransferCenter() {
             onChange={(e) => setIdAccount(e.target.value)}
             className="xl:text-2xl lg:text-xl text-lg outline-none px-4 flex-1 py-2"
           />
-          <button
+          <button 
+                  name='Search'
             type="button"
             onClick={async (e) => {
               e.preventDefault();
@@ -145,7 +146,8 @@ const ButtonAddToFavorite = ({ idFavoriteAccount, isLoadingFavorite, setIsLoadin
       toast.error(error.message)
     }
   }
-  return <button
+  return <button 
+                  name='Add To Favorite'
     className={` ${isLoadingFavorite ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-800 border-indigo-600 hover:border-indigo-800'}  transition-all cursor-pointer  py-2 rounded-lg cardInfo border  flex-1 flex justify-center items-center`}
     disabled={isLoadingFavorite}
     onClick={() => {
@@ -157,7 +159,8 @@ const ButtonAddToFavorite = ({ idFavoriteAccount, isLoadingFavorite, setIsLoadin
 }
 const ButtonRemoveToFavorite = ({ idFavoriteAccount, isLoadingFavorite, setIsLoadingFavorite }: { idFavoriteAccount: string | null | undefined, isLoadingFavorite: boolean, setIsLoadingFavorite: Dispatch<SetStateAction<boolean>> }) => {
   const { getFavoriteAccount } = useFavoriteAccounts()
-  return <button
+  return <button 
+                  name='Remove From Favorite'
     className={` ${isLoadingFavorite ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-800 border-indigo-600 hover:border-indigo-800'}  transition-all cursor-pointer  py-2 rounded-lg cardInfo border  flex-1 flex justify-center items-center`}
     disabled={isLoadingFavorite}
     onClick={async () => {

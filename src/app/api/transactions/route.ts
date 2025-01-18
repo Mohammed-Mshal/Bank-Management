@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
                 statusText: 'ERROR'
             })
         }
-        const userId = session.userId
+        const userId = session.userId as string
         if (!userId) {
             return NextResponse.json({
                 message: 'Unauthorized'
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
         const limit = req.nextUrl.searchParams.get('limit') || 20
         const page = req.nextUrl.searchParams.get('skip') || 1
         const skip = (+page - 1) * +limit
-        const startDate = req.nextUrl.searchParams.get('startDate') ? new Date(req.nextUrl.searchParams.get('startDate')as string)  : new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))
+        const startDate = req.nextUrl.searchParams.get('startDate') ? new Date(req.nextUrl.searchParams.get('startDate')as string)  : new Date(Date.now() - (30 * 24 * 60 * 60 * 1000))
         const endDate = req.nextUrl.searchParams.get('endDate') ? new Date(new Date(req.nextUrl.searchParams.get('endDate')as string).setUTCHours(23,59,59))  : new Date(Date.now())
         if (idAccount) {
             if (!isMongoId(idAccount)) {

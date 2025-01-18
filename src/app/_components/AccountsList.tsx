@@ -5,8 +5,11 @@ import TitleSection from "../_Elements/TitleSection";
 import { useAccount } from "../hooks/useAccount";
 import Loading from "../dashboard/loading";
 import CardInfoAccount from "../_Elements/CardInfoAccount";
+import { useStore } from "../hooks/useStore";
 export default function AccountsList() {
-  const { accounts, error, getAccounts, loading } = useAccount();
+  const { error, getAccounts, loading } = useAccount();
+
+  const { accounts } = useStore()
   useEffect(() => {
     getAccounts();
   }, []);
@@ -18,7 +21,7 @@ export default function AccountsList() {
           <FormCreateAccount />
         </div>
       </div>
-      {loading ? (
+      {loading || accounts?.length === 0 ? (
         <Loading />
       ) : accounts && accounts?.length > 0 ? (
         <div className="flex flex-wrap justify-center w-full max-h-full gap-y-6 gap-x-4 my-4">

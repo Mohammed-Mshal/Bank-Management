@@ -17,7 +17,7 @@ export async function GET() {
                 statusText: 'ERROR'
             })
         }
-        const userId = session.userId
+        const userId = session.userId as string
         if (!userId) {
             return NextResponse.json({
                 message: 'Unauthorized'

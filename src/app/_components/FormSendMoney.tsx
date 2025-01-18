@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useSendMoney } from "../hooks/useSendMoeny";
+import { useStore } from "../hooks/useStore";
 
 export default function FormSendMoney({
   idReceiverAccount,
@@ -30,8 +31,9 @@ export default function FormSendMoney({
   const [descriptionTransfer, setDescriptionTransfer] = useState<string>("");
   const [idAccount, setIdAccount] = useState<null | string>(null);
   const { isLoading, sendMoney, successful } = useSendMoney();
-  const { accounts, getAccounts } = useAccount();
+  const {  getAccounts } = useAccount();
   const [openDialog, setOpenDialog] = useState(false);
+  const { accounts } = useStore()
   useEffect(() => {
     getAccounts();
   }, []);
@@ -48,7 +50,7 @@ export default function FormSendMoney({
   }, [successful]);
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog} >
-      <DialogTrigger className="cardInfo border border-indigo-600 hover:border-indigo-800 hover:bg-indigo-900 transition-all py-1 flex-1 flex justify-center items-center rounded-lg">
+      <DialogTrigger name="Send Money" className="cardInfo border border-indigo-600 hover:border-indigo-800 hover:bg-indigo-900 transition-all py-1 flex-1 flex justify-center items-center rounded-lg">
         Send Money
       </DialogTrigger>
       <DialogContent className="max-w-[400px] w-[calc(100vw-40px)] rounded-xl">
@@ -134,6 +136,7 @@ export default function FormSendMoney({
             ></textarea>
           </div>
           <button
+          name="Send"
             disabled={isLoading}
             type="submit"
             className={` ${

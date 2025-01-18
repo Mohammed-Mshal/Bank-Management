@@ -103,7 +103,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         const { description }: { description: string } = await req.json()
         if (!session) {
             return NextResponse.json({
-                error: 'User Not Authorized'
+                message: 'User Not Authorized'
             }, {
                 status: 401, statusText: 'ERROR'
             })
@@ -119,7 +119,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         const idAccount = (await params).id
         if (!isMongoId(idAccount)) {
             return NextResponse.json({
-                error: 'Id Account Not Valid'
+                message: 'Id Account Not Valid'
             }, {
                 status: 204, statusText: 'ERROR'
             })
@@ -132,7 +132,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         })
         if (!isAccountExist) {
             return NextResponse.json({
-                error: 'Account Not Exist'
+                message: 'Account Not Exist'
             }, {
                 status: 204,
                 statusText: 'ERROR'
@@ -148,7 +148,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         prisma.$disconnect()
 
         return NextResponse.json({
-            error: 'Description Has Changed Successful'
+            message: 'Description Has Changed Successful'
         }, {
             status: 200, statusText: 'SUCCESS'
         })
@@ -170,7 +170,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         const { password }: { password: string } = await req.json()
         if (!session) {
             return NextResponse.json({
-                error: 'User Not Authorized'
+                message: 'User Not Authorized'
             }, {
                 status: 401, statusText: 'ERROR'
             })
@@ -178,7 +178,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         const userId = session.userId
         if (!userId) {
             return NextResponse.json({
-                error: 'User Not Authorized'
+                message: 'User Not Authorized'
             }, {
                 status: 401, statusText: 'ERROR'
             })
@@ -186,7 +186,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         const idAccount = (await params).id
         if (!isMongoId(idAccount)) {
             return NextResponse.json({
-                error: 'Id Account Not Valid'
+                message: 'Id Account Not Valid'
             }, {
                 status: 204, statusText: 'ERROR'
             })
@@ -199,7 +199,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         })
         if (!accountWillDelete) {
             return NextResponse.json({
-                error: 'Account Not found'
+                message: 'Account Not found'
             }, {
                 status: 204, statusText: 'ERROR'
             })
@@ -207,7 +207,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         const isValidPassword: boolean = await compare(password, accountWillDelete.password);
         if (!isValidPassword) {
             return NextResponse.json({
-                error: 'Password Is Not Valid'
+                message: 'Password Is Not Valid'
             }, {
                 status: 401, statusText: 'ERROR'
             })
@@ -219,7 +219,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
             },
         })
         return NextResponse.json({
-            error: 'Account Has Deleted Successful'
+            message: 'Account Has Deleted Successful'
         }, {
             status: 200, statusText: 'SUCCESS'
         })
@@ -227,7 +227,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     } catch (error: any) {
         await prisma.$disconnect()
         return NextResponse.json({
-            error: error.message
+            message: error.message
         }, {
             status: 500, statusText: 'FAIL'
 

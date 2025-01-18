@@ -38,7 +38,6 @@ export async function POST(req: NextRequest) {
                 statusText: 'ERROR'
             })
         }
-        console.log(isValidPassword);
         
         await prisma.$disconnect()
         await createSession(isExistingUser.id)

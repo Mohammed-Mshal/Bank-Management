@@ -17,7 +17,7 @@ export default function AsideDashboard() {
           }}
           className={` text-xl text-white rounded-xl transition-all duration-500 hover:bg-red-800 w-full mt-auto`}
         >
-          <button className="flex items-center gap-2 w-full py-3 px-4">
+          <button name="Sign Out" className="flex items-center gap-2 w-full py-3 px-4">
             <LiaSignOutAltSolid className="iconItem" />
             <span className="transition-all duration-500 text-nowrap overflow-hidden titleLink">
               Sign out

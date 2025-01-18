@@ -17,7 +17,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
                 statusText: "FAIL"
             })
         }
-        const idCustomer = session.userId
+        const idCustomer = session.userId as string
         if (!isMongoId(idCustomer)) {
             return NextResponse.json({
                 message: "Id Account Is Not Valid",

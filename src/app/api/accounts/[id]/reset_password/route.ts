@@ -10,9 +10,14 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         const session = await verifySession()
         const userId: string = <string>session?.userId;
         const accountId: string = (await params).id;
-        const reqBody: { oldPassword, newPassword } = await req.json()
+        const reqBody: { oldPassword:string, newPassword:string } = await req.json()
         if (!userId) {
-            throw Error('User Id Not Exist')
+            return NextResponse.json({
+                message: 'User Id Not Exist'
+            }, {
+                status: 401,
+                statusText: 'FAIL'
+            })
         }
         const userExist = await prisma.customer.findUnique({
             where: {
@@ -27,20 +32,40 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             }
         })
         if (!userExist) {
-            throw Error('Customer Not Exist')
+            return NextResponse.json({
+                message: 'Customer Not Exist'
+            }, {
+                status: 401,
+                statusText: 'ERROR'
+            })
         }
         if (!userExist.Account) {
-            throw Error('Account Not Exist For This Customer')
+            return NextResponse.json({
+                message: 'Account Not Exist For This Customer'
+            }, {
+                status: 401,
+                statusText: 'ERROR'
+            })
         }
         const { oldPassword, newPassword }: {
             oldPassword: string, newPassword: string
         } = reqBody
         if (!oldPassword || !newPassword) {
-            throw Error('Inputs required Is missing')
+            return NextResponse.json({
+                message: 'Inputs required Is missing'
+            }, {
+                status: 401,
+                statusText: 'ERROR'
+            })
         }
         const isOldPasswordExist = await compare(oldPassword, userExist.Account[0].password)
         if (!isOldPasswordExist) {
-            throw Error('Password Account Not Valid')
+            return NextResponse.json({
+                message: 'Password Account Not Valid'
+            }, {
+                status: 401,
+                statusText: 'ERROR'
+            })
         }
         const hashingNewPassword = await hash(newPassword, await genSalt(12))
         await prisma.account.update({
@@ -58,7 +83,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     } catch (error: any) {
         prisma.$disconnect()
 
-        return NextResponse.json({ error: error?.message }, { status: 400, statusText: 'FAIL' })
+        return NextResponse.json({ message: error?.message }, { status: 400, statusText: 'FAIL' })
 
     }
 }
