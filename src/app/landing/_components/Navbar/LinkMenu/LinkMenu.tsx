@@ -9,11 +9,11 @@ const linksNavbar = [
     textLink: "Services",
   },
   {
-    anchorLink: "/landing/#services",
+    anchorLink: "/landing/#features",
     textLink: "Features",
   },
   {
-    anchorLink: "/landing/#services",
+    anchorLink: "/landing/#contactUs",
     textLink: "Contact Us",
   },
 ];

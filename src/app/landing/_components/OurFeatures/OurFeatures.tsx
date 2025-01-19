@@ -30,7 +30,7 @@ const features: {
 ];
 export default function OurFeatures() {
   return (
-    <div className="features bg-white">
+    <div className="features bg-white" id="features">
       <div className="container max-w-screen-xl mx-auto px-4 flex flex-wrap justify-center lg:justify-between py-12 gap-8">
         {features.map((feature) => {
           return (

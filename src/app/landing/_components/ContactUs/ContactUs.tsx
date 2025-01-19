@@ -2,7 +2,7 @@ import * as motion from "framer-motion/client";
 
 export default function ContactUs() {
   return (
-    <div className="bg-white">
+    <div className="bg-white" id="contactUs">
       <div className="container max-w-screen-xl mx-auto px-4 py-10 flex items-center">
         <div className="flex items-center xl:gap-10 md:gap-6 gap-2 gap-y-4 flex-col lg:flex-row md:mb-8">
           <motion.div
