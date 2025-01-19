@@ -71,7 +71,7 @@ export default function AccountSetting({ idAccount }: { idAccount: string }) {
             <PopoverContent className="p-0 rounded-xl overflow-hidden" align="end">
                 <FormEditDescription idAccount={idAccount} />
                 <FormResetPasswordAccount idAccount={idAccount} />
-                <Button name="Delete" className="flex items-center justify-start gap-2 px-4 py-2 text-white bg-transparent hover:bg-red-700 transition-all duration-500 w-full"
+                <Button name="Delete" className="flex items-center justify-start gap-2 px-4 py-2 text-white bg-transparent hover:bg-red-700 transition-all duration-500 w-full rounded-none"
                     onClick={() => {
                         Swal.fire({
                             title: "Do you want to Delete This Account?",
