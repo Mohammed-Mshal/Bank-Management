@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     description: "Control In Your Notifications",
 };
 
-export default function AccountsLayout({
+export default function NotificationsLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

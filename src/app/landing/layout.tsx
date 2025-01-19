@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     description: "Modern Banking Experience",
 };
 
-export default function AccountsLayout({
+export default function LandingLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

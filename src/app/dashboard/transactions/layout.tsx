@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     description: "Control In Your Transactions Records",
 };
 
-export default function AccountsLayout({
+export default function TransactionsLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     description: "Settings Of Your Personal Account",
 };
 
-export default function AccountsLayout({
+export default function SettingsLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
