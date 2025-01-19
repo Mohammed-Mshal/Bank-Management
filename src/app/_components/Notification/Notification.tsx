@@ -64,7 +64,7 @@ export default function Notification() {
           : listNotification?.length > 0 && (
             <div className="">
               <Link
-                href={"/dashboard/notifications"}
+                href={"/dashboard/notificationsl"}
                 className="text-center text-white text-opacity-60 hover:text-opacity-100 flex flex-col max-w-full px-3 group transition-all cursor-pointer"
               >
                 See All Notification

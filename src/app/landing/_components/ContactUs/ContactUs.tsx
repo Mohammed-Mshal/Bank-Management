@@ -48,7 +48,7 @@ export default function ContactUs() {
                 type="text"
                 id="name"
                 placeholder="Enter Your First Name"
-                className="text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none"
+                className="text-lg  border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none bg-transparent text-black"
               />
             </div>
             <div className="containerInput flex flex-col sm:w-[calc(100%/2-20px)] w-full">
@@ -59,7 +59,7 @@ export default function ContactUs() {
                 type="text"
                 id="name"
                 placeholder="Enter Your Last Name"
-                className="text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none"
+                className="text-lg  border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none bg-transparent text-black"
               />
             </div>
             <div className="containerInput flex flex-col sm:w-[calc(100%/2-20px)] w-full">
@@ -70,7 +70,7 @@ export default function ContactUs() {
                 type="email"
                 id="email"
                 placeholder="Enter Your Email"
-                className="text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none"
+                className="text-lg  border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none bg-transparent text-black"
               />
             </div>
             <div className="containerInput flex flex-col sm:w-[calc(100%/2-20px)] w-full">
@@ -81,7 +81,7 @@ export default function ContactUs() {
                 type="text"
                 id="subject"
                 placeholder="Enter Your Subject"
-                className="text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none"
+                className="text-lg  border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none bg-transparent text-black"
               />
             </div>
             <div className="containerInput flex flex-col w-full">
@@ -93,7 +93,7 @@ export default function ContactUs() {
                 id="message"
                 placeholder="Enter Your Subject"
                 className="
-              text-lg  border border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none resize-none h-40"
+              text-lg  border-1 border-[#0600266f] p-2 px-4 rounded-lg outline-none bg-transparent text-black resize-none h-40"
               ></textarea>
             </div>
             <button 
